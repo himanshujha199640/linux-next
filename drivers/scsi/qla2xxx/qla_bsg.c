@@ -1435,7 +1435,7 @@ qla2x00_optrom_setup(struct bsg_job *bsg_job, scsi_qla_host_t *vha,
 		ha->optrom_state = QLA_SREADING;
 	}
 
-	ha->optrom_buffer = vmalloc(ha->optrom_region_size);
+	ha->optrom_buffer = vzalloc(ha->optrom_region_size);
 	if (!ha->optrom_buffer) {
 		ql_log(ql_log_warn, vha, 0x7059,
 		    "Read: Unable to allocate memory for optrom retrieval "
@@ -1445,7 +1445,6 @@ qla2x00_optrom_setup(struct bsg_job *bsg_job, scsi_qla_host_t *vha,
 		return -ENOMEM;
 	}
 
-	memset(ha->optrom_buffer, 0, ha->optrom_region_size);
 	return 0;
 }
 

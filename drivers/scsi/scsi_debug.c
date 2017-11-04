@@ -4500,12 +4500,11 @@ static ssize_t fake_rw_store(struct device_driver *ddp, const char *buf,
 					(unsigned long)sdebug_dev_size_mb *
 					1048576;
 
-				fake_storep = vmalloc(sz);
+				fake_storep = vzalloc(sz);
 				if (NULL == fake_storep) {
 					pr_err("out of memory, 9\n");
 					return -ENOMEM;
 				}
-				memset(fake_storep, 0, sz);
 			}
 			sdebug_fake_rw = n;
 		}
@@ -5028,13 +5027,12 @@ static int __init scsi_debug_init(void)
 	}
 
 	if (sdebug_fake_rw == 0) {
-		fake_storep = vmalloc(sz);
+		fake_storep = vzalloc(sz);
 		if (NULL == fake_storep) {
 			pr_err("out of memory, 1\n");
 			ret = -ENOMEM;
 			goto free_q_arr;
 		}
-		memset(fake_storep, 0, sz);
 		if (sdebug_num_parts > 0)
 			sdebug_build_parts(fake_storep, sz);
 	}
