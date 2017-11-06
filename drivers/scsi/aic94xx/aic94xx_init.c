@@ -584,8 +584,7 @@ static void asd_destroy_ha_caches(struct asd_ha_struct *asd_ha)
 	if (asd_ha->hw_prof.scb_ext)
 		asd_free_coherent(asd_ha, asd_ha->hw_prof.scb_ext);
 
-	if (asd_ha->hw_prof.ddb_bitmap)
-		kfree(asd_ha->hw_prof.ddb_bitmap);
+	kfree(asd_ha->hw_prof.ddb_bitmap);
 	asd_ha->hw_prof.ddb_bitmap = NULL;
 
 	for (i = 0; i < ASD_MAX_PHYS; i++) {
@@ -597,10 +596,8 @@ static void asd_destroy_ha_caches(struct asd_ha_struct *asd_ha)
 		asd_free_escbs(asd_ha);
 	if (asd_ha->seq.edb_arr)
 		asd_free_edbs(asd_ha);
-	if (asd_ha->hw_prof.ue.area) {
-		kfree(asd_ha->hw_prof.ue.area);
-		asd_ha->hw_prof.ue.area = NULL;
-	}
+	kfree(asd_ha->hw_prof.ue.area);
+	asd_ha->hw_prof.ue.area = NULL;
 	if (asd_ha->seq.tc_index_array) {
 		kfree(asd_ha->seq.tc_index_array);
 		kfree(asd_ha->seq.tc_index_bitmap);

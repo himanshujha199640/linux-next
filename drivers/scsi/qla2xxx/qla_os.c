@@ -506,14 +506,10 @@ static void qla2x00_free_queues(struct qla_hw_data *ha)
 	int cnt;
 	unsigned long flags;
 
-	if (ha->queue_pair_map) {
-		kfree(ha->queue_pair_map);
-		ha->queue_pair_map = NULL;
-	}
-	if (ha->base_qpair) {
-		kfree(ha->base_qpair);
-		ha->base_qpair = NULL;
-	}
+	kfree(ha->queue_pair_map);
+	ha->queue_pair_map = NULL;
+	kfree(ha->base_qpair);
+	ha->base_qpair = NULL;
 
 	spin_lock_irqsave(&ha->hardware_lock, flags);
 	for (cnt = 0; cnt < ha->max_req_queues; cnt++) {

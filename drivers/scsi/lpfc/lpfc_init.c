@@ -8388,10 +8388,8 @@ lpfc_sli4_release_queues(struct lpfc_queue ***qs, int max)
 static inline void
 lpfc_sli4_release_queue_map(uint16_t **qmap)
 {
-	if (*qmap != NULL) {
-		kfree(*qmap);
-		*qmap = NULL;
-	}
+	kfree(*qmap);
+	*qmap = NULL;
 }
 
 /**
