@@ -52,11 +52,17 @@ statement S;
 @@
 
 (
+- x = kmalloc(E1,E2);
++ x = kzalloc(E1,E2);
+|
 - x = (T)kmalloc(E1,E2);
 + x = (T)kzalloc(E1,E2);
 |
 - x = (T *)kmalloc(E1,E2);
 + x = kzalloc(E1,E2);
+|
+- x = vmalloc(E1);
++ x = vzalloc(E1);
 |
 - x = (T)vmalloc(E1);
 + x = (T)vzalloc(E1);
@@ -64,11 +70,17 @@ statement S;
 - x = (T *)vmalloc(E1);
 + x = vzalloc(E1);
 |
+- x = dma_alloc_coherent(E2,E1,E3,E4);
++ x = dma_zalloc_coherent(E2,E1,E3,E4);
+|
 - x = (T)dma_alloc_coherent(E2,E1,E3,E4);
 + x = (T)dma_zalloc_coherent(E2,E1,E3,E4);
 |
 - x = (T *)dma_alloc_coherent(E2,E1,E3,E4);
 + x = dma_zalloc_coherent(E2,E1,E3,E4);
+|
+- x = kmalloc_node(E1,E2,E3);
++ x = kzalloc_node(E1,E2,E3);
 |
 - x = (T)kmalloc_node(E1,E2,E3);
 + x = (T)kzalloc_node(E1,E2,E3);
@@ -76,11 +88,17 @@ statement S;
 - x = (T *)kmalloc_node(E1,E2,E3);
 + x = kzalloc_node(E1,E2,E3);
 |
+- x = kmem_cache_alloc(E3,E4);
++ x = kmem_cache_zalloc(E3,E4);
+|
 - x = (T)kmem_cache_alloc(E3,E4);
 + x = (T)kmem_cache_zalloc(E3,E4);
 |
 - x = (T *)kmem_cache_alloc(E3,E4);
 + x = kmem_cache_zalloc(E3,E4);
+|
+- x = kmem_alloc(E1,E2);
++ x = kmem_zalloc(E1,E2);
 |
 - x = (T)kmem_alloc(E1,E2);
 + x = (T)kmem_zalloc(E1,E2);
@@ -88,11 +106,17 @@ statement S;
 - x = (T *)kmem_alloc(E1,E2);
 + x = kmem_zalloc(E1,E2);
 |
+- x = devm_kmalloc(E2,E1,E3);
++ x = devm_kzalloc(E2,E1,E3);
+|
 - x = (T)devm_kmalloc(E2,E1,E3);
 + x = (T)devm_kzalloc(E2,E1,E3);
 |
 - x = (T *)devm_kmalloc(E2,E1,E3);
 + x = devm_kzalloc(E2,E1,E3);
+|
+- x = kvmalloc(E1,E2);
++ x = kvzalloc(E1,E2);
 |
 - x = (T)kvmalloc(E1,E2);
 + x = (T)kvzalloc(E1,E2);
@@ -100,11 +124,17 @@ statement S;
 - x = (T *)kvmalloc(E1,E2);
 + x = kvzalloc(E1,E2);
 |
+- x = pci_alloc_consistent(E2,E1,E3);
++ x = pci_zalloc_consistent(E2,E1,E3);
+|
 - x = (T)pci_alloc_consistent(E2,E1,E3);
 + x = (T)pci_zalloc_consistent(E2,E1,E3);
 |
 - x = (T *)pci_alloc_consistent(E2,E1,E3);
 + x = pci_zalloc_consistent(E2,E1,E3);
+|
+- x = kvmalloc_node(E1,E2,E3);
++ x = kvzalloc_node(E1,E2,E3);
 |
 - x = (T)kvmalloc_node(E1,E2,E3);
 + x = (T)kvzalloc_node(E1,E2,E3);
