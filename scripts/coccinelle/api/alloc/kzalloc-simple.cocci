@@ -70,11 +70,11 @@ statement S;
 - x = (T *)dma_alloc_coherent(E2,E1,E3,E4);
 + x = dma_zalloc_coherent(E2,E1,E3,E4);
 |
-- x = (T)kmalloc_node(E1,E2);
-+ x = (T)kzalloc_node(E1,E2);
+- x = (T)kmalloc_node(E1,E2,E3);
++ x = (T)kzalloc_node(E1,E2,E3);
 |
-- x = (T *)kmalloc_node(E1,E2);
-+ x = kzalloc_node(E1,E2);
+- x = (T *)kmalloc_node(E1,E2,E3);
++ x = kzalloc_node(E1,E2,E3);
 |
 - x = (T)kmem_cache_alloc();
 + x = (T)kmem_cache_zalloc();
@@ -212,12 +212,12 @@ coccilib.report.print_report(p[0], msg)
 @r3 depends on org || report@
 type T, T2;
 expression x;
-expression E1,E2;
+expression E1,E2,E3;
 statement S;
 position p;
 @@
 
- x = (T)kmalloc_node@p(E1,E2);
+ x = (T)kmalloc_node@p(E1,E2,E3);
  if ((x==NULL) || ...) S
  memset((T2)x,0,E1);
 
