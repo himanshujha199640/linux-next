@@ -2222,10 +2222,9 @@ static int megasas_get_ld_vf_affiliation_111(struct megasas_instance *instance,
 			memset(instance->vf_affiliation_111, 0,
 			       sizeof(struct MR_LD_VF_AFFILIATION_111));
 	else {
-		new_affiliation_111 =
-			pci_alloc_consistent(instance->pdev,
-					     sizeof(struct MR_LD_VF_AFFILIATION_111),
-					     &new_affiliation_111_h);
+		new_affiliation_111 = pci_zalloc_consistent(instance->pdev,
+							    sizeof(struct MR_LD_VF_AFFILIATION_111),
+							    &new_affiliation_111_h);
 		if (!new_affiliation_111) {
 			dev_printk(KERN_DEBUG, &instance->pdev->dev, "SR-IOV: Couldn't allocate "
 			       "memory for new affiliation for scsi%d\n",
@@ -2233,8 +2232,6 @@ static int megasas_get_ld_vf_affiliation_111(struct megasas_instance *instance,
 			megasas_return_cmd(instance, cmd);
 			return -ENOMEM;
 		}
-		memset(new_affiliation_111, 0,
-		       sizeof(struct MR_LD_VF_AFFILIATION_111));
 	}
 
 	memset(dcmd->mbox.b, 0, MFI_MBOX_SIZE);
@@ -2331,11 +2328,9 @@ static int megasas_get_ld_vf_affiliation_12(struct megasas_instance *instance,
 		memset(instance->vf_affiliation, 0, (MAX_LOGICAL_DRIVES + 1) *
 		       sizeof(struct MR_LD_VF_AFFILIATION));
 	else {
-		new_affiliation =
-			pci_alloc_consistent(instance->pdev,
-					     (MAX_LOGICAL_DRIVES + 1) *
-					     sizeof(struct MR_LD_VF_AFFILIATION),
-					     &new_affiliation_h);
+		new_affiliation = pci_zalloc_consistent(instance->pdev,
+							(MAX_LOGICAL_DRIVES + 1) * sizeof(struct MR_LD_VF_AFFILIATION),
+							&new_affiliation_h);
 		if (!new_affiliation) {
 			dev_printk(KERN_DEBUG, &instance->pdev->dev, "SR-IOV: Couldn't allocate "
 			       "memory for new affiliation for scsi%d\n",
@@ -2343,8 +2338,6 @@ static int megasas_get_ld_vf_affiliation_12(struct megasas_instance *instance,
 			megasas_return_cmd(instance, cmd);
 			return -ENOMEM;
 		}
-		memset(new_affiliation, 0, (MAX_LOGICAL_DRIVES + 1) *
-		       sizeof(struct MR_LD_VF_AFFILIATION));
 	}
 
 	memset(dcmd->mbox.b, 0, MFI_MBOX_SIZE);

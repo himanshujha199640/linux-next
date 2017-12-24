@@ -4381,14 +4381,10 @@ static int kvm_init_subcore_bitmap(void)
 		if (paca[first_cpu].sibling_subcore_state)
 			continue;
 
-		sibling_subcore_state =
-			kmalloc_node(sizeof(struct sibling_subcore_state),
-							GFP_KERNEL, node);
+		sibling_subcore_state = kzalloc_node(sizeof(struct sibling_subcore_state),
+						     GFP_KERNEL, node);
 		if (!sibling_subcore_state)
 			return -ENOMEM;
-
-		memset(sibling_subcore_state, 0,
-				sizeof(struct sibling_subcore_state));
 
 		for (j = 0; j < threads_per_core; j++) {
 			int cpu = first_cpu + j;

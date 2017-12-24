@@ -5147,8 +5147,9 @@ _base_send_ioc_init(struct MPT3SAS_ADAPTER *ioc)
 	if (ioc->rdpq_array_enable) {
 		reply_post_free_array_sz = ioc->reply_queue_count *
 		    sizeof(Mpi2IOCInitRDPQArrayEntry);
-		reply_post_free_array = pci_alloc_consistent(ioc->pdev,
-			reply_post_free_array_sz, &reply_post_free_array_dma);
+		reply_post_free_array = pci_zalloc_consistent(ioc->pdev,
+							      reply_post_free_array_sz,
+							      &reply_post_free_array_dma);
 		if (!reply_post_free_array) {
 			pr_err(MPT3SAS_FMT
 			"reply_post_free_array: pci_alloc_consistent failed\n",
@@ -5156,7 +5157,6 @@ _base_send_ioc_init(struct MPT3SAS_ADAPTER *ioc)
 			r = -ENOMEM;
 			goto out;
 		}
-		memset(reply_post_free_array, 0, reply_post_free_array_sz);
 		for (i = 0; i < ioc->reply_queue_count; i++)
 			reply_post_free_array[i].RDPQBaseAddress =
 			    cpu_to_le64(

@@ -4771,11 +4771,9 @@ static int pmcraid_allocate_host_rrqs(struct pmcraid_instance *pinstance)
 	buffer_size = HRRQ_ENTRY_SIZE * PMCRAID_MAX_CMD;
 
 	for (i = 0; i < pinstance->num_hrrq; i++) {
-		pinstance->hrrq_start[i] =
-			pci_alloc_consistent(
-					pinstance->pdev,
-					buffer_size,
-					&(pinstance->hrrq_start_bus_addr[i]));
+		pinstance->hrrq_start[i] = pci_zalloc_consistent(pinstance->pdev,
+								 buffer_size,
+								 &(pinstance->hrrq_start_bus_addr[i]));
 
 		if (!pinstance->hrrq_start[i]) {
 			pmcraid_err("pci_alloc failed for hrrq vector : %d\n",
@@ -4784,7 +4782,6 @@ static int pmcraid_allocate_host_rrqs(struct pmcraid_instance *pinstance)
 			return -ENOMEM;
 		}
 
-		memset(pinstance->hrrq_start[i], 0, buffer_size);
 		pinstance->hrrq_curr[i] = pinstance->hrrq_start[i];
 		pinstance->hrrq_end[i] =
 			pinstance->hrrq_start[i] + PMCRAID_MAX_CMD - 1;

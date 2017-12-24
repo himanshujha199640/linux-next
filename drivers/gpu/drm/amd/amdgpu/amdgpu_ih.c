@@ -81,12 +81,11 @@ int amdgpu_ih_ring_init(struct amdgpu_device *adev, unsigned ring_size,
 			/* add 8 bytes for the rptr/wptr shadows and
 			 * add them to the end of the ring allocation.
 			 */
-			adev->irq.ih.ring = pci_alloc_consistent(adev->pdev,
-								 adev->irq.ih.ring_size + 8,
-								 &adev->irq.ih.rb_dma_addr);
+			adev->irq.ih.ring = pci_zalloc_consistent(adev->pdev,
+								  adev->irq.ih.ring_size + 8,
+								  &adev->irq.ih.rb_dma_addr);
 			if (adev->irq.ih.ring == NULL)
 				return -ENOMEM;
-			memset((void *)adev->irq.ih.ring, 0, adev->irq.ih.ring_size + 8);
 			adev->irq.ih.wptr_offs = (adev->irq.ih.ring_size / 4) + 0;
 			adev->irq.ih.rptr_offs = (adev->irq.ih.ring_size / 4) + 1;
 		}
