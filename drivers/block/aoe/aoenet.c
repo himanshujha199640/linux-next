@@ -192,7 +192,7 @@ exit:
 }
 
 static struct packet_type aoe_pt __read_mostly = {
-	.type = __constant_htons(ETH_P_AOE),
+	.type = htons(ETH_P_AOE),
 	.func = aoenet_rcv,
 };
 

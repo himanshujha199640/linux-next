@@ -1277,7 +1277,7 @@ static int bnx2fc_interface_setup(struct bnx2fc_interface *interface)
 	dev_add_pack(&interface->fip_packet_type);
 
 	interface->fcoe_packet_type.func = bnx2fc_rcv;
-	interface->fcoe_packet_type.type = __constant_htons(ETH_P_FCOE);
+	interface->fcoe_packet_type.type = htons(ETH_P_FCOE);
 	interface->fcoe_packet_type.dev = netdev;
 	dev_add_pack(&interface->fcoe_packet_type);
 

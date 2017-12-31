@@ -69,7 +69,7 @@ new_skb(ulong len)
 		skb_reserve(skb, MAX_HEADER);
 		skb_reset_mac_header(skb);
 		skb_reset_network_header(skb);
-		skb->protocol = __constant_htons(ETH_P_AOE);
+		skb->protocol = htons(ETH_P_AOE);
 		skb_checksum_none_assert(skb);
 	}
 	return skb;
@@ -132,7 +132,7 @@ aoehdr_atainit(struct aoedev *d, struct aoetgt *t, struct aoe_hdr *h)
 
 	memcpy(h->src, t->ifp->nd->dev_addr, sizeof h->src);
 	memcpy(h->dst, t->addr, sizeof h->dst);
-	h->type = __constant_cpu_to_be16(ETH_P_AOE);
+	h->type = cpu_to_be16(ETH_P_AOE);
 	h->verfl = AOE_HVER;
 	h->major = cpu_to_be16(d->aoemajor);
 	h->minor = d->aoeminor;
@@ -437,7 +437,7 @@ aoecmd_cfg_pkts(ushort aoemajor, unsigned char aoeminor, struct sk_buff_head *qu
 
 		memset(h->dst, 0xff, sizeof h->dst);
 		memcpy(h->src, ifp->dev_addr, sizeof h->src);
-		h->type = __constant_cpu_to_be16(ETH_P_AOE);
+		h->type = cpu_to_be16(ETH_P_AOE);
 		h->verfl = AOE_HVER;
 		h->major = cpu_to_be16(aoemajor);
 		h->minor = aoeminor;
