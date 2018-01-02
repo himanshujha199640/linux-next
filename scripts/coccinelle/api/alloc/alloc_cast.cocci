@@ -28,7 +28,11 @@ type T;
 
 * (T *)
   \(kmalloc\|kzalloc\|kcalloc\|kmem_cache_alloc\|kmem_cache_zalloc\|
-   kmem_cache_alloc_node\|kmalloc_node\|kzalloc_node\)(...)
+   kmem_cache_alloc_node\|kmalloc_node\|kzalloc_node\|vmalloc\|vzalloc\|
+   dma_alloc_coherent\|dma_zalloc_coherent\|devm_kmalloc\|devm_kzalloc\|
+   kvmalloc\|kvzalloc\|kvmalloc_node\|kvzalloc_node\|pci_alloc_consistent\|
+   pci_zalloc_consistent\|kmem_alloc\|kmem_zalloc\|kmem_zone_alloc\|
+   kmem_zone_zalloc\|vmalloc_node\|vzalloc_node\)(...)
 
 //----------------------------------------------------------
 //  For patch mode
@@ -39,8 +43,12 @@ type T;
 @@
 
 - (T *)
-  (\(kmalloc\|kzalloc\|kcalloc\|kmem_cache_alloc\|kmem_cache_zalloc\|
-   kmem_cache_alloc_node\|kmalloc_node\|kzalloc_node\)(...))
+  \(kmalloc\|kzalloc\|kcalloc\|kmem_cache_alloc\|kmem_cache_zalloc\|
+   kmem_cache_alloc_node\|kmalloc_node\|kzalloc_node\|vmalloc\|vzalloc\|
+   dma_alloc_coherent\|dma_zalloc_coherent\|devm_kmalloc\|devm_kzalloc\|
+   kvmalloc\|kvzalloc\|kvmalloc_node\|kvzalloc_node\|pci_alloc_consistent\|
+   pci_zalloc_consistent\|kmem_alloc\|kmem_zalloc\|kmem_zone_alloc\|
+   kmem_zone_zalloc\|vmalloc_node\|vzalloc_node\)(...)
 
 //----------------------------------------------------------
 //  For org and report mode
@@ -51,8 +59,13 @@ type T;
 position p;
 @@
 
- (T@p *)\(kmalloc\|kzalloc\|kcalloc\|kmem_cache_alloc\|kmem_cache_zalloc\|
-   kmem_cache_alloc_node\|kmalloc_node\|kzalloc_node\)(...)
+ (T@p *)
+  \(kmalloc\|kzalloc\|kcalloc\|kmem_cache_alloc\|kmem_cache_zalloc\|
+   kmem_cache_alloc_node\|kmalloc_node\|kzalloc_node\|vmalloc\|vzalloc\|
+   dma_alloc_coherent\|dma_zalloc_coherent\|devm_kmalloc\|devm_kzalloc\|
+   kvmalloc\|kvzalloc\|kvmalloc_node\|kvzalloc_node\|pci_alloc_consistent\|
+   pci_zalloc_consistent\|kmem_alloc\|kmem_zalloc\|kmem_zone_alloc\|
+   kmem_zone_zalloc\|vmalloc_node\|vzalloc_node\)(...)
 
 @script:python depends on org@
 p << r.p;
@@ -68,5 +81,3 @@ t << r.T;
 
 msg="WARNING: casting value returned by memory allocation function to (%s *) is useless." % (t)
 coccilib.report.print_report(p[0], msg)
-
-
