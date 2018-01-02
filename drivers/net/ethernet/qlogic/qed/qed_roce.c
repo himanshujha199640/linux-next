@@ -715,7 +715,7 @@ static int qed_roce_sp_destroy_qp_responder(struct qed_hwfn *p_hwfn,
 
 	p_ramrod = &p_ent->ramrod.roce_destroy_qp_resp;
 
-	p_ramrod_res = (struct roce_destroy_qp_resp_output_params *)
+	p_ramrod_res =
 	    dma_alloc_coherent(&p_hwfn->cdev->pdev->dev, sizeof(*p_ramrod_res),
 			       &ramrod_res_phys, GFP_KERNEL);
 
@@ -770,7 +770,7 @@ static int qed_roce_sp_destroy_qp_requester(struct qed_hwfn *p_hwfn,
 	if (!qp->req_offloaded)
 		return 0;
 
-	p_ramrod_res = (struct roce_destroy_qp_req_output_params *)
+	p_ramrod_res =
 		       dma_alloc_coherent(&p_hwfn->cdev->pdev->dev,
 					  sizeof(*p_ramrod_res),
 					  &ramrod_res_phys, GFP_KERNEL);
@@ -853,7 +853,7 @@ int qed_roce_query_qp(struct qed_hwfn *p_hwfn,
 	}
 
 	/* Send a query responder ramrod to FW to get RQ-PSN and state */
-	p_resp_ramrod_res = (struct roce_query_qp_resp_output_params *)
+	p_resp_ramrod_res =
 	    dma_alloc_coherent(&p_hwfn->cdev->pdev->dev,
 			       sizeof(*p_resp_ramrod_res),
 			       &resp_ramrod_res_phys, GFP_KERNEL);
@@ -901,7 +901,7 @@ int qed_roce_query_qp(struct qed_hwfn *p_hwfn,
 	}
 
 	/* Send a query requester ramrod to FW to get SQ-PSN and state */
-	p_req_ramrod_res = (struct roce_query_qp_req_output_params *)
+	p_req_ramrod_res =
 			   dma_alloc_coherent(&p_hwfn->cdev->pdev->dev,
 					      sizeof(*p_req_ramrod_res),
 					      &req_ramrod_res_phys,

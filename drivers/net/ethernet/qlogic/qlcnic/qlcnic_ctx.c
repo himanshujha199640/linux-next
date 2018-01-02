@@ -570,7 +570,7 @@ int qlcnic_alloc_hw_resources(struct qlcnic_adapter *adapter)
 
 	for (ring = 0; ring < adapter->drv_tx_rings; ring++) {
 		tx_ring = &adapter->tx_ring[ring];
-		ptr = (__le32 *)dma_alloc_coherent(&pdev->dev, sizeof(u32),
+		ptr = dma_alloc_coherent(&pdev->dev, sizeof(u32),
 						   &tx_ring->hw_cons_phys_addr,
 						   GFP_KERNEL);
 		if (ptr == NULL) {

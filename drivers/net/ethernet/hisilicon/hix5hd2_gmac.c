@@ -1028,7 +1028,7 @@ static int hix5hd2_init_sg_desc_queue(struct hix5hd2_priv *priv)
 	struct sg_desc *desc;
 	dma_addr_t phys_addr;
 
-	desc = (struct sg_desc *)dma_alloc_coherent(priv->dev,
+	desc = dma_alloc_coherent(priv->dev,
 				TX_DESC_NUM * sizeof(struct sg_desc),
 				&phys_addr, GFP_KERNEL);
 	if (!desc)

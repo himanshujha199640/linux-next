@@ -1157,7 +1157,7 @@ octeon_register_dispatch_fn(struct octeon_device *oct,
 
 		dev_dbg(&oct->pci_dev->dev,
 			"Adding opcode to dispatch list linked list\n");
-		dispatch = (struct octeon_dispatch *)
+		dispatch =
 			   vmalloc(sizeof(struct octeon_dispatch));
 		if (!dispatch) {
 			dev_err(&oct->pci_dev->dev,

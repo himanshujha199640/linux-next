@@ -607,7 +607,7 @@ static int bfin_serial_startup(struct uart_port *port)
 	set_dma_callback(uart->rx_dma_channel, bfin_serial_dma_rx_int, uart);
 	set_dma_callback(uart->tx_dma_channel, bfin_serial_dma_tx_int, uart);
 
-	uart->rx_dma_buf.buf = (unsigned char *)dma_alloc_coherent(NULL, PAGE_SIZE, &dma_handle, GFP_DMA);
+	uart->rx_dma_buf.buf = dma_alloc_coherent(NULL, PAGE_SIZE, &dma_handle, GFP_DMA);
 	uart->rx_dma_buf.head = 0;
 	uart->rx_dma_buf.tail = 0;
 	uart->rx_dma_nrows = 0;

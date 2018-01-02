@@ -185,7 +185,7 @@ static int ehci_mem_init (struct ehci_hcd *ehci, gfp_t flags)
 	}
 
 	/* Hardware periodic table */
-	ehci->periodic = (__le32 *)
+	ehci->periodic =
 		dma_alloc_coherent(ehci_to_hcd(ehci)->self.sysdev,
 			ehci->periodic_size * sizeof(__le32),
 			&ehci->periodic_dma, flags);

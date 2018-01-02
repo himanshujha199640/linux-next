@@ -87,7 +87,7 @@ int rvt_driver_mr_init(struct rvt_dev_info *rdi)
 	rdi->lkey_table.max = 1 << lkey_table_size;
 	rdi->lkey_table.shift = 32 - lkey_table_size;
 	lk_tab_size = rdi->lkey_table.max * sizeof(*rdi->lkey_table.table);
-	rdi->lkey_table.table = (struct rvt_mregion __rcu **)
+	rdi->lkey_table.table = 
 			       vmalloc_node(lk_tab_size, rdi->dparms.node);
 	if (!rdi->lkey_table.table)
 		return -ENOMEM;
