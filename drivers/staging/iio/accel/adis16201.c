@@ -114,12 +114,15 @@ static int adis16201_read_raw(struct iio_dev *indio_dev,
 	case IIO_CHAN_INFO_SCALE:
 		switch (chan->type) {
 		case IIO_VOLTAGE:
-			if (chan->channel == 0) {
+			switch (chan->channel) {
+			case 0:
 				*val = 1;
 				*val2 = 220000;
-			} else {
+				break;
+			case 1:
 				*val = 0;
 				*val2 = 610000;
+				break;
 			}
 			return IIO_VAL_INT_PLUS_MICRO;
 		case IIO_TEMP:
