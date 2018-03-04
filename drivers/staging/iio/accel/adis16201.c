@@ -20,9 +20,8 @@
 #include <linux/iio/buffer.h>
 #include <linux/iio/imu/adis.h>
 
-#define ADIS16201_STARTUP_DELAY		220
-
-#define ADIS16201_FLASH_CNT      0x00
+#define ADIS16201_STARTUP_DELAY_MS	220
+#define ADIS16201_FLASH_CNT		0x00
 
 /* Data Output Register Information */
 #define ADIS16201_SUPPLY_OUT     0x02
@@ -69,7 +68,7 @@
 
 #define ADIS16201_MSC_CTRL_DATA_RDY_EN	        BIT(2)
 
-#define ADIS16201_MSC_CTRL_ACTIVE_HIGH	        BIT(1)
+#define ADIS16201_MSC_CTRL_ACTIVE_DATA_RDY_HIGH	        BIT(1)
 
 #define ADIS16201_MSC_CTRL_DATA_RDY_DIO1	BIT(0)
 
@@ -80,14 +79,14 @@
 
 #define ADIS16201_DIAG_STAT_SPI_FAIL_BIT   3
 
-#define ADIS16201_DIAG_STAT_FLASH_UPT_BIT  2
+#define ADIS16201_DIAG_STAT_FLASH_UPT_FAIL_BIT  2
 
 #define ADIS16201_DIAG_STAT_POWER_HIGH_BIT 1
 
 #define ADIS16201_DIAG_STAT_POWER_LOW_BIT  0
 
 #define ADIS16201_GLOB_CMD_SW_RESET	BIT(7)
-#define ADIS16201_GLOB_CMD_FACTORY_CAL	BIT(1)
+#define ADIS16201_GLOB_CMD_FACTORY	BIT(1)
 
 #define ADIS16201_ERROR_ACTIVE          BIT(14)
 
@@ -231,7 +230,7 @@ static const struct iio_info adis16201_info = {
 
 static const char * const adis16201_status_error_msgs[] = {
 	[ADIS16201_DIAG_STAT_SPI_FAIL_BIT] = "SPI failure",
-	[ADIS16201_DIAG_STAT_FLASH_UPT_BIT] = "Flash update failed",
+	[ADIS16201_DIAG_STAT_FLASH_UPT_FAIL_BIT] = "Flash update failed",
 	[ADIS16201_DIAG_STAT_POWER_HIGH_BIT] = "Power supply above 3.625V",
 	[ADIS16201_DIAG_STAT_POWER_LOW_BIT] = "Power supply below 3.15V",
 };
@@ -244,11 +243,11 @@ static const struct adis_data adis16201_data = {
 
 	.self_test_mask = ADIS16201_MSC_CTRL_SELF_TEST_EN,
 	.self_test_no_autoclear = true,
-	.startup_delay = ADIS16201_STARTUP_DELAY,
+	.startup_delay = ADIS16201_STARTUP_DELAY_MS,
 
 	.status_error_msgs = adis16201_status_error_msgs,
 	.status_error_mask = BIT(ADIS16201_DIAG_STAT_SPI_FAIL_BIT) |
-		BIT(ADIS16201_DIAG_STAT_FLASH_UPT_BIT) |
+		BIT(ADIS16201_DIAG_STAT_FLASH_UPT_FAIL_BIT) |
 		BIT(ADIS16201_DIAG_STAT_POWER_HIGH_BIT) |
 		BIT(ADIS16201_DIAG_STAT_POWER_LOW_BIT),
 };
