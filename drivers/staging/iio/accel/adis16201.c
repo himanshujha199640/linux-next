@@ -130,6 +130,11 @@ static int adis16201_read_raw(struct iio_dev *indio_dev,
 			*val2 = 0;
 			return IIO_VAL_INT_PLUS_MICRO;
 		case IIO_ACCEL:
+		       /*
+			* IIO base unit for sensitivity of accelerometer
+			* is milli g.
+			* 1 LSB represents 0.244 mg.
+			*/
 			*val = 0;
 			*val2 = IIO_G_TO_M_S_2(462400);
 			return IIO_VAL_INT_PLUS_NANO;
@@ -142,6 +147,11 @@ static int adis16201_read_raw(struct iio_dev *indio_dev,
 		}
 		break;
 	case IIO_CHAN_INFO_OFFSET:
+	       /*
+		* The raw ADC value is 0x4FE when the temperature
+		* is 25 degrees and the scale factor per milli
+		* degree celcius is -470.
+		*/
 		*val = 25000 / -470 - 1278;
 		return IIO_VAL_INT;
 	case IIO_CHAN_INFO_CALIBBIAS:
