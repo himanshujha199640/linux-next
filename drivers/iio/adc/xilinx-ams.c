@@ -1004,9 +1004,6 @@ static int ams_probe(struct platform_device *pdev)
                return -ENODEV;
 
        id = of_match_node(ams_of_match_table, pdev->dev.of_node);
-       if (!id)
-               return -ENODEV;
-
        indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*ams));
        if (!indio_dev)
                return -ENOMEM;
