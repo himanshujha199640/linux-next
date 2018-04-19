@@ -204,20 +204,13 @@ static int is31fl319x_parse_dt(struct device *dev,
 			       struct is31fl319x_chip *is31)
 {
 	struct device_node *np = dev->of_node, *child;
-	const struct of_device_id *of_dev_id;
 	int count;
 	int ret;
 
 	if (!np)
 		return -ENODEV;
 
-	of_dev_id = of_match_device(of_is31fl319x_match, dev);
-	if (!of_dev_id) {
-		dev_err(dev, "Failed to match device with supported chips\n");
-		return -EINVAL;
-	}
-
-	is31->cdef = of_dev_id->data;
+	is31->cdef = of_device_get_match_data(dev);
 
 	count = of_get_child_count(np);
 

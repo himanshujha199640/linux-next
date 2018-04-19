@@ -1866,7 +1866,6 @@ static int nmk_pinctrl_resume(struct device *dev)
 
 static int nmk_pinctrl_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	struct device_node *np = pdev->dev.of_node;
 	struct device_node *prcm_np;
 	struct nmk_pinctrl *npct;
@@ -1877,10 +1876,7 @@ static int nmk_pinctrl_probe(struct platform_device *pdev)
 	if (!npct)
 		return -ENOMEM;
 
-	match = of_match_device(nmk_pinctrl_match, &pdev->dev);
-	if (!match)
-		return -ENODEV;
-	version = (unsigned int) match->data;
+	version = (unsigned int)of_device_get_match_data(&pdev->dev);
 
 	/* Poke in other ASIC variants here */
 	if (version == PINCTRL_NMK_STN8815)

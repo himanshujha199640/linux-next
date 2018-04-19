@@ -1352,7 +1352,6 @@ MODULE_DEVICE_TABLE(of, nb8800_dt_ids);
 
 static int nb8800_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	const struct nb8800_ops *ops = NULL;
 	struct nb8800_priv *priv;
 	struct resource *res;
@@ -1363,9 +1362,7 @@ static int nb8800_probe(struct platform_device *pdev)
 	int irq;
 	int ret;
 
-	match = of_match_device(nb8800_dt_ids, &pdev->dev);
-	if (match)
-		ops = match->data;
+	ops = of_device_get_match_data(&pdev->dev);
 
 	irq = platform_get_irq(pdev, 0);
 	if (irq <= 0) {

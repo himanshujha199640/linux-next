@@ -754,19 +754,12 @@ static int ath10k_ahb_probe(struct platform_device *pdev)
 	struct ath10k *ar;
 	struct ath10k_ahb *ar_ahb;
 	struct ath10k_pci *ar_pci;
-	const struct of_device_id *of_id;
 	enum ath10k_hw_rev hw_rev;
 	size_t size;
 	int ret;
 	u32 chip_id;
 
-	of_id = of_match_device(ath10k_ahb_of_match, &pdev->dev);
-	if (!of_id) {
-		dev_err(&pdev->dev, "failed to find matching device tree id\n");
-		return -EINVAL;
-	}
-
-	hw_rev = (enum ath10k_hw_rev)of_id->data;
+	hw_rev = (enum ath10k_hw_rev)of_device_get_match_data(&pdev->dev);
 
 	size = sizeof(*ar_pci) + sizeof(*ar_ahb);
 	ar = ath10k_core_create(size, &pdev->dev, ATH10K_BUS_AHB,

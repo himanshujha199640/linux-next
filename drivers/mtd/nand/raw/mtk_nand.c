@@ -1434,7 +1434,6 @@ static int mtk_nfc_probe(struct platform_device *pdev)
 	struct device_node *np = dev->of_node;
 	struct mtk_nfc *nfc;
 	struct resource *res;
-	const struct of_device_id *of_nfc_id = NULL;
 	int ret, irq;
 
 	nfc = devm_kzalloc(dev, sizeof(*nfc), GFP_KERNEL);
@@ -1498,13 +1497,7 @@ static int mtk_nfc_probe(struct platform_device *pdev)
 		goto clk_disable;
 	}
 
-	of_nfc_id = of_match_device(mtk_nfc_id_table, &pdev->dev);
-	if (!of_nfc_id) {
-		ret = -ENODEV;
-		goto clk_disable;
-	}
-
-	nfc->caps = of_nfc_id->data;
+	nfc->caps = of_device_get_match_data(&pdev->dev);
 
 	platform_set_drvdata(pdev, nfc);
 

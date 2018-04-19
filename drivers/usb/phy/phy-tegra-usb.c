@@ -972,7 +972,6 @@ MODULE_DEVICE_TABLE(of, tegra_usb_phy_id_table);
 
 static int tegra_usb_phy_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	struct resource *res;
 	struct tegra_usb_phy *tegra_phy = NULL;
 	struct device_node *np = pdev->dev.of_node;
@@ -983,12 +982,7 @@ static int tegra_usb_phy_probe(struct platform_device *pdev)
 	if (!tegra_phy)
 		return -ENOMEM;
 
-	match = of_match_device(tegra_usb_phy_id_table, &pdev->dev);
-	if (!match) {
-		dev_err(&pdev->dev, "Error: No device match found\n");
-		return -ENODEV;
-	}
-	tegra_phy->soc_config = match->data;
+	tegra_phy->soc_config = of_device_get_match_data(&pdev->dev);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	if (!res) {

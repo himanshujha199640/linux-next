@@ -392,7 +392,6 @@ static size_t max_transfer_size(struct spi_device *spi)
 
 static int mt7621_spi_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	struct spi_master *master;
 	struct mt7621_spi *rs;
 	unsigned long flags;
@@ -402,10 +401,7 @@ static int mt7621_spi_probe(struct platform_device *pdev)
 	struct clk *clk;
 	struct mt7621_spi_ops *ops;
 
-	match = of_match_device(mt7621_spi_match, &pdev->dev);
-	if (!match)
-		return -EINVAL;
-	ops = (struct mt7621_spi_ops *)match->data;
+	ops = of_device_get_match_data(&pdev->dev);
 
 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	base = devm_ioremap_resource(&pdev->dev, r);

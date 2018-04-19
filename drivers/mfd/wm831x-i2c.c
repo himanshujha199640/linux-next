@@ -30,18 +30,12 @@ static int wm831x_i2c_probe(struct i2c_client *i2c,
 			    const struct i2c_device_id *id)
 {
 	struct wm831x_pdata *pdata = dev_get_platdata(&i2c->dev);
-	const struct of_device_id *of_id;
 	struct wm831x *wm831x;
 	enum wm831x_parent type;
 	int ret;
 
 	if (i2c->dev.of_node) {
-		of_id = of_match_device(wm831x_of_match, &i2c->dev);
-		if (!of_id) {
-			dev_err(&i2c->dev, "Failed to match device\n");
-			return -ENODEV;
-		}
-		type = (enum wm831x_parent)of_id->data;
+		type = (enum wm831x_parent)of_device_get_match_data(&i2c->dev);
 	} else {
 		type = (enum wm831x_parent)id->driver_data;
 	}

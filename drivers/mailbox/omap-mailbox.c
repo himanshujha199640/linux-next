@@ -700,7 +700,6 @@ static int omap_mbox_probe(struct platform_device *pdev)
 	struct omap_mbox_fifo *fifo;
 	struct device_node *node = pdev->dev.of_node;
 	struct device_node *child;
-	const struct of_device_id *match;
 	u32 intr_type, info_count;
 	u32 num_users, num_fifos;
 	u32 tmp[3];
@@ -712,10 +711,7 @@ static int omap_mbox_probe(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
-	match = of_match_device(omap_mailbox_of_match, &pdev->dev);
-	if (!match)
-		return -ENODEV;
-	intr_type = (u32)match->data;
+	intr_type = (u32)of_device_get_match_data(&pdev->dev);
 
 	if (of_property_read_u32(node, "ti,mbox-num-users", &num_users))
 		return -ENODEV;

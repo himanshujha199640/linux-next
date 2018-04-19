@@ -243,7 +243,6 @@ static int img_pwm_probe(struct platform_device *pdev)
 	unsigned long clk_rate;
 	struct resource *res;
 	struct img_pwm_chip *pwm;
-	const struct of_device_id *of_dev_id;
 
 	pwm = devm_kzalloc(&pdev->dev, sizeof(*pwm), GFP_KERNEL);
 	if (!pwm)
@@ -256,10 +255,7 @@ static int img_pwm_probe(struct platform_device *pdev)
 	if (IS_ERR(pwm->base))
 		return PTR_ERR(pwm->base);
 
-	of_dev_id = of_match_device(img_pwm_of_match, &pdev->dev);
-	if (!of_dev_id)
-		return -ENODEV;
-	pwm->data = of_dev_id->data;
+	pwm->data = of_device_get_match_data(&pdev->dev);
 
 	pwm->periph_regs = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
 							   "img,cr-periph");

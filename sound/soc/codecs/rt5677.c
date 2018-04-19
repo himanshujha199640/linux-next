@@ -5145,11 +5145,7 @@ static int rt5677_i2c_probe(struct i2c_client *i2c,
 	i2c_set_clientdata(i2c, rt5677);
 
 	if (i2c->dev.of_node) {
-		const struct of_device_id *match_id;
-
-		match_id = of_match_device(rt5677_of_match, &i2c->dev);
-		if (match_id)
-			rt5677->type = (enum rt5677_type)match_id->data;
+		rt5677->type = (enum rt5677_type)of_device_get_match_data(&i2c->dev);
 
 		rt5677_read_device_properties(rt5677, &i2c->dev);
 	} else if (ACPI_HANDLE(&i2c->dev)) {

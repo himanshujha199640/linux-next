@@ -54,16 +54,12 @@ static int hi6421_pmic_probe(struct platform_device *pdev)
 {
 	struct hi6421_pmic *pmic;
 	struct resource *res;
-	const struct of_device_id *id;
 	const struct mfd_cell *subdevs;
 	enum hi6421_type type;
 	void __iomem *base;
 	int n_subdevs, ret;
 
-	id = of_match_device(of_hi6421_pmic_match, &pdev->dev);
-	if (!id)
-		return -EINVAL;
-	type = (enum hi6421_type)id->data;
+	type = (enum hi6421_type)of_device_get_match_data(&pdev->dev);
 
 	pmic = devm_kzalloc(&pdev->dev, sizeof(*pmic), GFP_KERNEL);
 	if (!pmic)

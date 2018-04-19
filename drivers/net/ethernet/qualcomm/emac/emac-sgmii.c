@@ -333,7 +333,6 @@ int emac_sgmii_config(struct platform_device *pdev, struct emac_adapter *adpt)
 
 		sgmii_pdev = to_platform_device(dev);
 	} else {
-		const struct of_device_id *match;
 		struct device_node *np;
 
 		np = of_parse_phandle(pdev->dev.of_node, "internal-phy", 0);
@@ -348,14 +347,7 @@ int emac_sgmii_config(struct platform_device *pdev, struct emac_adapter *adpt)
 			return -ENODEV;
 		}
 
-		match = of_match_device(emac_sgmii_dt_match, &sgmii_pdev->dev);
-		if (!match) {
-			dev_err(&pdev->dev, "unrecognized internal phy node\n");
-			ret = -ENODEV;
-			goto error_put_device;
-		}
-
-		phy->initialize = (emac_sgmii_function)match->data;
+		phy->initialize = (emac_sgmii_function)of_device_get_match_data(&sgmii_pdev->dev);
 	}
 
 	phy->open = emac_sgmii_open;

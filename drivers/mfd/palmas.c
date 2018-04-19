@@ -512,12 +512,11 @@ static int palmas_i2c_probe(struct i2c_client *i2c,
 {
 	struct palmas *palmas;
 	struct palmas_platform_data *pdata;
-	struct palmas_driver_data *driver_data;
+	const struct palmas_driver_data *driver_data;
 	struct device_node *node = i2c->dev.of_node;
 	int ret = 0, i;
 	unsigned int reg, addr;
 	int slave;
-	const struct of_device_id *match;
 
 	pdata = dev_get_platdata(&i2c->dev);
 
@@ -541,12 +540,7 @@ static int palmas_i2c_probe(struct i2c_client *i2c,
 	palmas->dev = &i2c->dev;
 	palmas->irq = i2c->irq;
 
-	match = of_match_device(of_palmas_match_tbl, &i2c->dev);
-
-	if (!match)
-		return -ENODATA;
-
-	driver_data = (struct palmas_driver_data *)match->data;
+	driver_data = of_device_get_match_data(&i2c->dev);
 	palmas->features = *driver_data->features;
 
 	for (i = 0; i < PALMAS_NUM_CLIENTS; i++) {

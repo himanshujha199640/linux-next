@@ -171,20 +171,12 @@ MODULE_DEVICE_TABLE(of, ti_lmu_of_match);
 static int ti_lmu_probe(struct i2c_client *cl, const struct i2c_device_id *id)
 {
 	struct device *dev = &cl->dev;
-	const struct of_device_id *match;
 	const struct ti_lmu_data *data;
 	struct regmap_config regmap_cfg;
 	struct ti_lmu *lmu;
 	int ret;
 
-	match = of_match_device(ti_lmu_of_match, dev);
-	if (!match)
-		return -ENODEV;
-	/*
-	 * Get device specific data from of_match table.
-	 * This data is defined by using TI_LMU_DATA() macro.
-	 */
-	data = (struct ti_lmu_data *)match->data;
+	data = of_device_get_match_data(dev);
 
 	lmu = devm_kzalloc(dev, sizeof(*lmu), GFP_KERNEL);
 	if (!lmu)

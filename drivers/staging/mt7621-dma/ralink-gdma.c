@@ -799,7 +799,6 @@ static const struct of_device_id gdma_of_match_table[] = {
 
 static int gdma_dma_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	struct gdma_dmaengine_chan *chan;
 	struct gdma_dma_dev *dma_dev;
 	struct dma_device *dd;
@@ -814,10 +813,7 @@ static int gdma_dma_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
-	match = of_match_device(gdma_of_match_table, &pdev->dev);
-	if (!match)
-		return -EINVAL;
-	data = (struct gdma_data *) match->data;
+	data = of_device_get_match_data(&pdev->dev);
 
 	dma_dev = devm_kzalloc(&pdev->dev, sizeof(*dma_dev) +
 			(sizeof(struct gdma_dmaengine_chan) * data->chancnt),

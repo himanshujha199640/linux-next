@@ -212,15 +212,9 @@ static int ingenic_uart_probe(struct platform_device *pdev)
 	struct resource *irq = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
 	struct ingenic_uart_data *data;
 	const struct ingenic_uart_config *cdata;
-	const struct of_device_id *match;
 	int err, line;
 
-	match = of_match_device(of_match, &pdev->dev);
-	if (!match) {
-		dev_err(&pdev->dev, "Error: No device match found\n");
-		return -ENODEV;
-	}
-	cdata = match->data;
+	cdata = of_device_get_match_data(&pdev->dev);
 
 	if (!regs || !irq) {
 		dev_err(&pdev->dev, "no registers/irq defined\n");

@@ -645,15 +645,11 @@ static int ak4642_i2c_probe(struct i2c_client *i2c,
 	struct clk *mcko = NULL;
 
 	if (np) {
-		const struct of_device_id *of_id;
-
 		mcko = ak4642_of_parse_mcko(dev);
 		if (IS_ERR(mcko))
 			mcko = NULL;
 
-		of_id = of_match_device(ak4642_of_match, dev);
-		if (of_id)
-			drvdata = of_id->data;
+		drvdata = of_device_get_match_data(dev);
 	} else {
 		drvdata = (const struct ak4642_drvdata *)id->driver_data;
 	}

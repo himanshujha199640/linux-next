@@ -599,15 +599,10 @@ static int __init dra7xx_pcie_probe(struct platform_device *pdev)
 	struct device_node *np = dev->of_node;
 	char name[10];
 	struct gpio_desc *reset;
-	const struct of_device_id *match;
 	const struct dra7xx_pcie_of_data *data;
 	enum dw_pcie_device_mode mode;
 
-	match = of_match_device(of_match_ptr(of_dra7xx_pcie_match), dev);
-	if (!match)
-		return -EINVAL;
-
-	data = (struct dra7xx_pcie_of_data *)match->data;
+	data = of_device_get_match_data(dev);
 	mode = (enum dw_pcie_device_mode)data->mode;
 
 	dra7xx = devm_kzalloc(dev, sizeof(*dra7xx), GFP_KERNEL);

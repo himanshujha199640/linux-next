@@ -1050,13 +1050,10 @@ static int __init imxdma_probe(struct platform_device *pdev)
 {
 	struct imxdma_engine *imxdma;
 	struct resource *res;
-	const struct of_device_id *of_id;
 	int ret, i;
 	int irq, irq_err;
 
-	of_id = of_match_device(imx_dma_of_dev_id, &pdev->dev);
-	if (of_id)
-		pdev->id_entry = of_id->data;
+	pdev->id_entry = of_device_get_match_data(&pdev->dev);
 
 	imxdma = devm_kzalloc(&pdev->dev, sizeof(*imxdma), GFP_KERNEL);
 	if (!imxdma)

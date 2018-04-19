@@ -237,17 +237,12 @@ static const struct fpga_manager_ops altera_ps_ops = {
 static int altera_ps_probe(struct spi_device *spi)
 {
 	struct altera_ps_conf *conf;
-	const struct of_device_id *of_id;
 
 	conf = devm_kzalloc(&spi->dev, sizeof(*conf), GFP_KERNEL);
 	if (!conf)
 		return -ENOMEM;
 
-	of_id = of_match_device(of_ef_match, &spi->dev);
-	if (!of_id)
-		return -ENODEV;
-
-	conf->data = of_id->data;
+	conf->data = of_device_get_match_data(&spi->dev);
 	conf->spi = spi;
 	conf->config = devm_gpiod_get(&spi->dev, "nconfig", GPIOD_OUT_HIGH);
 	if (IS_ERR(conf->config)) {

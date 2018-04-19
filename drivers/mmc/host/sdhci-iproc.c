@@ -239,17 +239,13 @@ MODULE_DEVICE_TABLE(of, sdhci_iproc_of_match);
 
 static int sdhci_iproc_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	const struct sdhci_iproc_data *iproc_data;
 	struct sdhci_host *host;
 	struct sdhci_iproc_host *iproc_host;
 	struct sdhci_pltfm_host *pltfm_host;
 	int ret;
 
-	match = of_match_device(sdhci_iproc_of_match, &pdev->dev);
-	if (!match)
-		return -EINVAL;
-	iproc_data = match->data;
+	iproc_data = of_device_get_match_data(&pdev->dev);
 
 	host = sdhci_pltfm_init(pdev, iproc_data->pdata, sizeof(*iproc_host));
 	if (IS_ERR(host))

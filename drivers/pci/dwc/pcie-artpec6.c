@@ -491,16 +491,11 @@ static int artpec6_pcie_probe(struct platform_device *pdev)
 	struct resource *dbi_base;
 	struct resource *phy_base;
 	int ret;
-	const struct of_device_id *match;
 	const struct artpec_pcie_of_data *data;
 	enum artpec_pcie_variants variant;
 	enum dw_pcie_device_mode mode;
 
-	match = of_match_device(artpec6_pcie_of_match, dev);
-	if (!match)
-		return -EINVAL;
-
-	data = (struct artpec_pcie_of_data *)match->data;
+	data = of_device_get_match_data(dev);
 	variant = (enum artpec_pcie_variants)data->variant;
 	mode = (enum dw_pcie_device_mode)data->mode;
 

@@ -999,7 +999,6 @@ static int vc4_crtc_bind(struct device *dev, struct device *master, void *data)
 	struct vc4_crtc *vc4_crtc;
 	struct drm_crtc *crtc;
 	struct drm_plane *primary_plane, *cursor_plane, *destroy_plane, *temp;
-	const struct of_device_id *match;
 	int ret, i;
 
 	vc4_crtc = devm_kzalloc(dev, sizeof(*vc4_crtc), GFP_KERNEL);
@@ -1007,10 +1006,7 @@ static int vc4_crtc_bind(struct device *dev, struct device *master, void *data)
 		return -ENOMEM;
 	crtc = &vc4_crtc->base;
 
-	match = of_match_device(vc4_crtc_dt_match, dev);
-	if (!match)
-		return -ENODEV;
-	vc4_crtc->data = match->data;
+	vc4_crtc->data = of_device_get_match_data(dev);
 
 	vc4_crtc->regs = vc4_ioremap_regs(pdev, 0);
 	if (IS_ERR(vc4_crtc->regs))

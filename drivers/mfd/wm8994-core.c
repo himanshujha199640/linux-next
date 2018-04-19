@@ -627,7 +627,6 @@ MODULE_DEVICE_TABLE(of, wm8994_of_match);
 static int wm8994_i2c_probe(struct i2c_client *i2c,
 				      const struct i2c_device_id *id)
 {
-	const struct of_device_id *of_id;
 	struct wm8994 *wm8994;
 	int ret;
 
@@ -640,9 +639,7 @@ static int wm8994_i2c_probe(struct i2c_client *i2c,
 	wm8994->irq = i2c->irq;
 
 	if (i2c->dev.of_node) {
-		of_id = of_match_device(wm8994_of_match, &i2c->dev);
-		if (of_id)
-			wm8994->type = (enum wm8994_type)of_id->data;
+		wm8994->type = (enum wm8994_type)of_device_get_match_data(&i2c->dev);
 	} else {
 		wm8994->type = id->driver_data;
 	}

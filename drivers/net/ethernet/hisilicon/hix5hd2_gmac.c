@@ -1099,7 +1099,6 @@ static int hix5hd2_dev_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct device_node *node = dev->of_node;
-	const struct of_device_id *of_id = NULL;
 	struct net_device *ndev;
 	struct hix5hd2_priv *priv;
 	struct resource *res;
@@ -1117,12 +1116,7 @@ static int hix5hd2_dev_probe(struct platform_device *pdev)
 	priv->dev = dev;
 	priv->netdev = ndev;
 
-	of_id = of_match_device(hix5hd2_of_match, dev);
-	if (!of_id) {
-		ret = -EINVAL;
-		goto out_free_netdev;
-	}
-	priv->hw_cap = (unsigned long)of_id->data;
+	priv->hw_cap = (unsigned long)of_device_get_match_data(dev);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	priv->base = devm_ioremap_resource(dev, res);

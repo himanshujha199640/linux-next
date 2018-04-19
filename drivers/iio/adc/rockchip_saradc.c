@@ -208,7 +208,6 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
 	struct device_node *np = pdev->dev.of_node;
 	struct iio_dev *indio_dev = NULL;
 	struct resource	*mem;
-	const struct of_device_id *match;
 	int ret;
 	int irq;
 
@@ -222,13 +221,7 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
 	}
 	info = iio_priv(indio_dev);
 
-	match = of_match_device(rockchip_saradc_match, &pdev->dev);
-	if (!match) {
-		dev_err(&pdev->dev, "failed to match device\n");
-		return -ENODEV;
-	}
-
-	info->data = match->data;
+	info->data = of_device_get_match_data(&pdev->dev);
 
 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	info->regs = devm_ioremap_resource(&pdev->dev, mem);

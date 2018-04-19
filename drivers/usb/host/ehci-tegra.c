@@ -396,7 +396,6 @@ static const struct of_device_id tegra_ehci_of_match[] = {
 
 static int tegra_ehci_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	const struct tegra_ehci_soc_config *soc_config;
 	struct resource *res;
 	struct usb_hcd *hcd;
@@ -406,12 +405,7 @@ static int tegra_ehci_probe(struct platform_device *pdev)
 	int irq;
 	struct usb_phy *u_phy;
 
-	match = of_match_device(tegra_ehci_of_match, &pdev->dev);
-	if (!match) {
-		dev_err(&pdev->dev, "Error: No device match found\n");
-		return -ENODEV;
-	}
-	soc_config = match->data;
+	soc_config = of_device_get_match_data(&pdev->dev);
 
 	/* Right now device-tree probed devices don't get dma_mask set.
 	 * Since shared usb code relies on it, set it here for now.

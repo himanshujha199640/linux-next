@@ -851,7 +851,6 @@ static int imxfb_probe(struct platform_device *pdev)
 	struct imx_fb_platform_data *pdata;
 	struct resource *res;
 	struct imx_fb_videomode *m;
-	const struct of_device_id *of_id;
 	int ret, i;
 	int bytes_per_pixel;
 
@@ -861,9 +860,7 @@ static int imxfb_probe(struct platform_device *pdev)
 	if (ret < 0)
 		return ret;
 
-	of_id = of_match_device(imxfb_of_dev_id, &pdev->dev);
-	if (of_id)
-		pdev->id_entry = of_id->data;
+	pdev->id_entry = of_device_get_match_data(&pdev->dev);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	if (!res)
