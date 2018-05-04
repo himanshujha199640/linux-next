@@ -144,7 +144,6 @@ static struct watchdog_device st_wdog_dev = {
 
 static int st_wdog_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	struct device_node *np = pdev->dev.of_node;
 	struct st_wdog *st_wdog;
 	struct regmap *regmap;
@@ -168,12 +167,7 @@ static int st_wdog_probe(struct platform_device *pdev)
 	if (!st_wdog)
 		return -ENOMEM;
 
-	match = of_match_device(st_wdog_match, &pdev->dev);
-	if (!match) {
-		dev_err(&pdev->dev, "Couldn't match device\n");
-		return -ENODEV;
-	}
-	st_wdog->syscfg	= (struct st_wdog_syscfg *)match->data;
+	st_wdog->syscfg = of_device_get_match_data(&pdev->dev);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	base = devm_ioremap_resource(&pdev->dev, res);

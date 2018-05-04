@@ -285,7 +285,6 @@ static u32 mpc512x_can_get_clock(struct platform_device *ofdev,
 static const struct of_device_id mpc5xxx_can_table[];
 static int mpc5xxx_can_probe(struct platform_device *ofdev)
 {
-	const struct of_device_id *match;
 	const struct mpc5xxx_can_data *data;
 	struct device_node *np = ofdev->dev.of_node;
 	struct net_device *dev;
@@ -295,10 +294,7 @@ static int mpc5xxx_can_probe(struct platform_device *ofdev)
 	int irq, mscan_clksrc = 0;
 	int err = -ENOMEM;
 
-	match = of_match_device(mpc5xxx_can_table, &ofdev->dev);
-	if (!match)
-		return -EINVAL;
-	data = match->data;
+	data = of_device_get_match_data(&ofdev->dev);
 
 	base = of_iomap(np, 0);
 	if (!base) {

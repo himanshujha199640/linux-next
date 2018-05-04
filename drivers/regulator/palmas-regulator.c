@@ -1615,16 +1615,10 @@ static int palmas_regulators_probe(struct platform_device *pdev)
 	struct regulator_config config = { };
 	struct palmas_pmic *pmic;
 	const char *pdev_name;
-	const struct of_device_id *match;
 	int ret = 0;
 	unsigned int reg;
 
-	match = of_match_device(of_match_ptr(of_palmas_match_tbl), &pdev->dev);
-
-	if (!match)
-		return -ENODATA;
-
-	driver_data = (struct palmas_pmic_driver_data *)match->data;
+	driver_data = of_device_get_match_data(&pdev->dev);
 	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
 	if (!pdata)
 		return -ENOMEM;

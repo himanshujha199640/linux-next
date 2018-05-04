@@ -536,7 +536,6 @@ static irqreturn_t qcom_rpm_wakeup_interrupt(int irq, void *dev)
 
 static int qcom_rpm_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	struct device_node *syscon_np;
 	struct resource *res;
 	struct qcom_rpm *rpm;
@@ -586,10 +585,7 @@ static int qcom_rpm_probe(struct platform_device *pdev)
 		return irq_wakeup;
 	}
 
-	match = of_match_device(qcom_rpm_of_match, &pdev->dev);
-	if (!match)
-		return -ENODEV;
-	rpm->data = match->data;
+	rpm->data = of_device_get_match_data(&pdev->dev);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	rpm->status_regs = devm_ioremap_resource(&pdev->dev, res);

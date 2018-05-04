@@ -146,7 +146,6 @@ static const struct of_device_id of_flash_match[];
 static int of_flash_probe(struct platform_device *dev)
 {
 	const char * const *part_probe_types;
-	const struct of_device_id *match;
 	struct device_node *dp = dev->dev.of_node;
 	struct resource res;
 	struct of_flash *info;
@@ -162,10 +161,7 @@ static int of_flash_probe(struct platform_device *dev)
 	bool map_indirect;
 	const char *mtd_name = NULL;
 
-	match = of_match_device(of_flash_match, &dev->dev);
-	if (!match)
-		return -EINVAL;
-	probe_type = match->data;
+	probe_type = of_device_get_match_data(&dev->dev);
 
 	reg_tuple_size = (of_n_addr_cells(dp) + of_n_size_cells(dp)) * sizeof(u32);
 

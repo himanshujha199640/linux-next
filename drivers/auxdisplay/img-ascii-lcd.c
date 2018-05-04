@@ -357,17 +357,12 @@ static DEVICE_ATTR_RW(message);
  */
 static int img_ascii_lcd_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *match;
 	const struct img_ascii_lcd_config *cfg;
 	struct img_ascii_lcd_ctx *ctx;
 	struct resource *res;
 	int err;
 
-	match = of_match_device(img_ascii_lcd_matches, &pdev->dev);
-	if (!match)
-		return -ENODEV;
-
-	cfg = match->data;
+	cfg = of_device_get_match_data(&pdev->dev);
 	ctx = devm_kzalloc(&pdev->dev, sizeof(*ctx) + cfg->num_chars,
 			   GFP_KERNEL);
 	if (!ctx)

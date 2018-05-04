@@ -254,18 +254,13 @@ static int ti_emif_probe(struct platform_device *pdev)
 	int ret;
 	struct resource *res;
 	struct device *dev = &pdev->dev;
-	const struct of_device_id *match;
 	struct ti_emif_data *emif_data;
 
 	emif_data = devm_kzalloc(dev, sizeof(*emif_data), GFP_KERNEL);
 	if (!emif_data)
 		return -ENOMEM;
 
-	match = of_match_device(ti_emif_of_match, &pdev->dev);
-	if (!match)
-		return -ENODEV;
-
-	emif_data->pm_data.ti_emif_sram_config = (unsigned long)match->data;
+	emif_data->pm_data.ti_emif_sram_config = (unsigned long)of_device_get_match_data(&pdev->dev);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	emif_data->pm_data.ti_emif_base_addr_virt = devm_ioremap_resource(dev,
