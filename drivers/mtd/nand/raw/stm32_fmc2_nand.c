@@ -1876,8 +1876,7 @@ static int stm32_fmc2_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	fmc2->io_base = devm_ioremap_resource(dev, res);
+	fmc2->io_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(fmc2->io_base))
 		return PTR_ERR(fmc2->io_base);
 
@@ -1888,22 +1887,20 @@ static int stm32_fmc2_probe(struct platform_device *pdev)
 		if (!(fmc2->cs_assigned & BIT(chip_cs)))
 			continue;
 
-		res = platform_get_resource(pdev, IORESOURCE_MEM, mem_region);
-		fmc2->data_base[chip_cs] = devm_ioremap_resource(dev, res);
+		fmc2->data_base[chip_cs] = devm_platform_ioremap_resource(pdev,
+									  mem_region);
 		if (IS_ERR(fmc2->data_base[chip_cs]))
 			return PTR_ERR(fmc2->data_base[chip_cs]);
 
 		fmc2->data_phys_addr[chip_cs] = res->start;
 
-		res = platform_get_resource(pdev, IORESOURCE_MEM,
-					    mem_region + 1);
-		fmc2->cmd_base[chip_cs] = devm_ioremap_resource(dev, res);
+		fmc2->cmd_base[chip_cs] = devm_platform_ioremap_resource(pdev,
+									 mem_region + 1);
 		if (IS_ERR(fmc2->cmd_base[chip_cs]))
 			return PTR_ERR(fmc2->cmd_base[chip_cs]);
 
-		res = platform_get_resource(pdev, IORESOURCE_MEM,
-					    mem_region + 2);
-		fmc2->addr_base[chip_cs] = devm_ioremap_resource(dev, res);
+		fmc2->addr_base[chip_cs] = devm_platform_ioremap_resource(pdev,
+									  mem_region + 2);
 		if (IS_ERR(fmc2->addr_base[chip_cs]))
 			return PTR_ERR(fmc2->addr_base[chip_cs]);
 	}

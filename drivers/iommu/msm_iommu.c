@@ -752,8 +752,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	iommu->base = devm_ioremap_resource(iommu->dev, r);
+	iommu->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(iommu->base)) {
 		dev_err(iommu->dev, "could not get iommu base\n");
 		ret = PTR_ERR(iommu->base);

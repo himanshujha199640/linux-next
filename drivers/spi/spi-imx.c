@@ -1666,8 +1666,7 @@ static int spi_imx_probe(struct platform_device *pdev)
 
 	init_completion(&spi_imx->xfer_done);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	spi_imx->base = devm_ioremap_resource(&pdev->dev, res);
+	spi_imx->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(spi_imx->base)) {
 		ret = PTR_ERR(spi_imx->base);
 		goto out_master_put;

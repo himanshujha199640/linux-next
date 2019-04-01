@@ -1082,8 +1082,7 @@ static int imx6_pcie_probe(struct platform_device *pdev)
 		}
 	}
 
-	dbi_base = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	pci->dbi_base = devm_ioremap_resource(dev, dbi_base);
+	pci->dbi_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(pci->dbi_base))
 		return PTR_ERR(pci->dbi_base);
 

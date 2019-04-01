@@ -330,7 +330,7 @@ static int sudmac_probe(struct platform_device *pdev)
 	int err, i;
 	struct sudmac_device *su_dev;
 	struct dma_device *dma_dev;
-	struct resource *chan, *irq_res;
+	struct resource *irq_res;
 
 	/* get platform data */
 	if (!pdata)
@@ -348,8 +348,7 @@ static int sudmac_probe(struct platform_device *pdev)
 
 	dma_dev = &su_dev->shdma_dev.dma_dev;
 
-	chan = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	su_dev->chan_reg = devm_ioremap_resource(&pdev->dev, chan);
+	su_dev->chan_reg = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(su_dev->chan_reg))
 		return PTR_ERR(su_dev->chan_reg);
 

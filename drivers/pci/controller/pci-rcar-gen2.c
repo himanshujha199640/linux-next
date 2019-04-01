@@ -341,8 +341,7 @@ static int rcar_pci_probe(struct platform_device *pdev)
 	struct hw_pci hw;
 	void *hw_private[1];
 
-	cfg_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	reg = devm_ioremap_resource(dev, cfg_res);
+	reg = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(reg))
 		return PTR_ERR(reg);
 

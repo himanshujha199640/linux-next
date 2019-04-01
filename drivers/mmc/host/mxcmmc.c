@@ -1012,7 +1012,6 @@ static int mxcmci_probe(struct platform_device *pdev)
 
 	of_id = of_match_device(mxcmci_of_match, &pdev->dev);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	irq = platform_get_irq(pdev, 0);
 	if (irq < 0) {
 		dev_err(&pdev->dev, "failed to get IRQ: %d\n", irq);
@@ -1025,7 +1024,7 @@ static int mxcmci_probe(struct platform_device *pdev)
 
 	host = mmc_priv(mmc);
 
-	host->base = devm_ioremap_resource(&pdev->dev, res);
+	host->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(host->base)) {
 		ret = PTR_ERR(host->base);
 		goto out_free;

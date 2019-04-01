@@ -696,8 +696,7 @@ static int lpc32xx_nand_probe(struct platform_device *pdev)
 
 	host->pdev = pdev;
 
-	rc = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	host->io_base = devm_ioremap_resource(&pdev->dev, rc);
+	host->io_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(host->io_base))
 		return PTR_ERR(host->io_base);
 

@@ -488,8 +488,7 @@ static int __init ks_pcie_dw_host_init(struct keystone_pcie *ks_pcie)
 	pp->va_cfg1_base = pp->va_cfg0_base;
 
 	/* Index 1 is the application reg. space address */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	ks_pcie->va_app_base = devm_ioremap_resource(dev, res);
+	ks_pcie->va_app_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(ks_pcie->va_app_base))
 		return PTR_ERR(ks_pcie->va_app_base);
 

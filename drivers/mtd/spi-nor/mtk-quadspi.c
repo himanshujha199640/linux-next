@@ -464,7 +464,6 @@ static int mtk_nor_init(struct mtk_nor *mtk_nor,
 static int mtk_nor_drv_probe(struct platform_device *pdev)
 {
 	struct device_node *flash_np;
-	struct resource *res;
 	int ret;
 	struct mtk_nor *mtk_nor;
 
@@ -478,8 +477,7 @@ static int mtk_nor_drv_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	platform_set_drvdata(pdev, mtk_nor);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	mtk_nor->base = devm_ioremap_resource(&pdev->dev, res);
+	mtk_nor->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(mtk_nor->base))
 		return PTR_ERR(mtk_nor->base);
 

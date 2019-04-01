@@ -1454,8 +1454,7 @@ static int stm32_hash_probe(struct platform_device *pdev)
 	if (!hdev)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	hdev->io_base = devm_ioremap_resource(dev, res);
+	hdev->io_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(hdev->io_base))
 		return PTR_ERR(hdev->io_base);
 

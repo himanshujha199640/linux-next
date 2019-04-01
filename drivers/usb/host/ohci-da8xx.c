@@ -445,8 +445,7 @@ static int ohci_da8xx_probe(struct platform_device *pdev)
 			goto err;
 	}
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	hcd->regs = devm_ioremap_resource(dev, mem);
+	hcd->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(hcd->regs)) {
 		error = PTR_ERR(hcd->regs);
 		goto err;

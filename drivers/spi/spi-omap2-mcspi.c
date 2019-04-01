@@ -1460,8 +1460,7 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
 	}
 	regs_offset = pdata->regs_offset;
 
-	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	mcspi->base = devm_ioremap_resource(&pdev->dev, r);
+	mcspi->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(mcspi->base)) {
 		status = PTR_ERR(mcspi->base);
 		goto free_master;

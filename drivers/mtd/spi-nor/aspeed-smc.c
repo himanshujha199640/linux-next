@@ -872,13 +872,11 @@ static int aspeed_smc_probe(struct platform_device *pdev)
 	mutex_init(&controller->mutex);
 	platform_set_drvdata(pdev, controller);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	controller->regs = devm_ioremap_resource(dev, res);
+	controller->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(controller->regs))
 		return PTR_ERR(controller->regs);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	controller->ahb_base = devm_ioremap_resource(dev, res);
+	controller->ahb_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(controller->ahb_base))
 		return PTR_ERR(controller->ahb_base);
 

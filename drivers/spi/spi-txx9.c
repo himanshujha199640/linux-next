@@ -355,8 +355,7 @@ static int txx9spi_probe(struct platform_device *dev)
 	master->min_speed_hz = DIV_ROUND_UP(c->baseclk, SPI_MAX_DIVIDER + 1);
 	master->max_speed_hz = c->baseclk / (SPI_MIN_DIVIDER + 1);
 
-	res = platform_get_resource(dev, IORESOURCE_MEM, 0);
-	c->membase = devm_ioremap_resource(&dev->dev, res);
+	c->membase = devm_platform_ioremap_resource(dev, 0);
 	if (IS_ERR(c->membase))
 		goto exit_busy;
 

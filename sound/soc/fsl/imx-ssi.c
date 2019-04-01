@@ -543,8 +543,7 @@ static int imx_ssi_probe(struct platform_device *pdev)
 	if (ret)
 		goto failed_clk;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ssi->base = devm_ioremap_resource(&pdev->dev, res);
+	ssi->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ssi->base)) {
 		ret = PTR_ERR(ssi->base);
 		goto failed_register;

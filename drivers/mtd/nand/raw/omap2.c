@@ -2214,8 +2214,7 @@ static int omap_nand_probe(struct platform_device *pdev)
 		}
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	nand_chip->legacy.IO_ADDR_R = devm_ioremap_resource(&pdev->dev, res);
+	nand_chip->legacy.IO_ADDR_R = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(nand_chip->legacy.IO_ADDR_R))
 		return PTR_ERR(nand_chip->legacy.IO_ADDR_R);
 

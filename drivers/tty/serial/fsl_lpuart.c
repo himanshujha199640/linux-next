@@ -2279,8 +2279,7 @@ static int lpuart_probe(struct platform_device *pdev)
 		return -EINVAL;
 	}
 	sport->port.line = ret;
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	sport->port.membase = devm_ioremap_resource(&pdev->dev, res);
+	sport->port.membase = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(sport->port.membase))
 		return PTR_ERR(sport->port.membase);
 

@@ -295,9 +295,8 @@ static int ti_emif_probe(struct platform_device *pdev)
 
 	emif_data->pm_data.ti_emif_sram_config = (unsigned long)match->data;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	emif_data->pm_data.ti_emif_base_addr_virt = devm_ioremap_resource(dev,
-									  res);
+	emif_data->pm_data.ti_emif_base_addr_virt = devm_platform_ioremap_resource(pdev,
+										   0);
 	if (IS_ERR(emif_data->pm_data.ti_emif_base_addr_virt)) {
 		ret = PTR_ERR(emif_data->pm_data.ti_emif_base_addr_virt);
 		return ret;

@@ -248,7 +248,6 @@ static struct vexpress_config_bridge_ops vexpress_syscfg_bridge_ops = {
 static int vexpress_syscfg_probe(struct platform_device *pdev)
 {
 	struct vexpress_syscfg *syscfg;
-	struct resource *res;
 	struct device *bridge;
 
 	syscfg = devm_kzalloc(&pdev->dev, sizeof(*syscfg), GFP_KERNEL);
@@ -257,8 +256,7 @@ static int vexpress_syscfg_probe(struct platform_device *pdev)
 	syscfg->dev = &pdev->dev;
 	INIT_LIST_HEAD(&syscfg->funcs);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	syscfg->base = devm_ioremap_resource(&pdev->dev, res);
+	syscfg->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(syscfg->base))
 		return PTR_ERR(syscfg->base);
 

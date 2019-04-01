@@ -575,8 +575,7 @@ static int exynos_ppmu_parse_dt(struct platform_device *pdev,
 	}
 
 	/* Maps the memory mapped IO to control PPMU register */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	base = devm_ioremap_resource(dev, res);
+	base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(base))
 		return PTR_ERR(base);
 

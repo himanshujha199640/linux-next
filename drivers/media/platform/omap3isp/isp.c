@@ -2255,9 +2255,8 @@ static int isp_probe(struct platform_device *pdev)
 	for (i = 0; i < 2; i++) {
 		unsigned int map_idx = i ? OMAP3_ISP_IOMEM_CSI2A_REGS1 : 0;
 
-		mem = platform_get_resource(pdev, IORESOURCE_MEM, i);
-		isp->mmio_base[map_idx] =
-			devm_ioremap_resource(isp->dev, mem);
+		isp->mmio_base[map_idx] = devm_platform_ioremap_resource(pdev,
+									 i);
 		if (IS_ERR(isp->mmio_base[map_idx]))
 			return PTR_ERR(isp->mmio_base[map_idx]);
 	}

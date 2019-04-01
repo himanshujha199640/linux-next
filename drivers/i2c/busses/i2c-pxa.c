@@ -1215,8 +1215,7 @@ static int i2c_pxa_probe(struct platform_device *dev)
 	if (!i2c)
 		return -ENOMEM;
 
-	res = platform_get_resource(dev, IORESOURCE_MEM, 0);
-	i2c->reg_base = devm_ioremap_resource(&dev->dev, res);
+	i2c->reg_base = devm_platform_ioremap_resource(dev, 0);
 	if (IS_ERR(i2c->reg_base))
 		return PTR_ERR(i2c->reg_base);
 

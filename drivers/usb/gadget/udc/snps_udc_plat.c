@@ -112,8 +112,7 @@ static int udc_plat_probe(struct platform_device *pdev)
 	spin_lock_init(&udc->lock);
 	udc->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	udc->virt_addr = devm_ioremap_resource(dev, res);
+	udc->virt_addr = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(udc->regs))
 		return PTR_ERR(udc->regs);
 

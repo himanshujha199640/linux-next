@@ -613,7 +613,6 @@ MODULE_DEVICE_TABLE(of, stm_thermal_of_match);
 static int stm_thermal_probe(struct platform_device *pdev)
 {
 	struct stm_thermal_sensor *sensor;
-	struct resource *res;
 	const struct thermal_trip *trip;
 	void __iomem *base;
 	int ret, i;
@@ -632,8 +631,7 @@ static int stm_thermal_probe(struct platform_device *pdev)
 
 	sensor->dev = &pdev->dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	base = devm_ioremap_resource(&pdev->dev, res);
+	base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(base))
 		return PTR_ERR(base);
 

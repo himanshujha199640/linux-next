@@ -511,9 +511,7 @@ static int __init pata_s3c_probe(struct platform_device *pdev)
 
 	info->irq = platform_get_irq(pdev, 0);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-
-	info->ide_addr = devm_ioremap_resource(dev, res);
+	info->ide_addr = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(info->ide_addr))
 		return PTR_ERR(info->ide_addr);
 

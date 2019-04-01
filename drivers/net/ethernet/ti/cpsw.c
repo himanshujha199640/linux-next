@@ -3475,7 +3475,7 @@ static int cpsw_probe(struct platform_device *pdev)
 	struct cpsw_ale_params		ale_params;
 	void __iomem			*ss_regs;
 	void __iomem			*cpts_regs;
-	struct resource			*res, *ss_res;
+	struct resource			*ss_res;
 	struct gpio_descs		*mode;
 	u32 slave_offset, sliver_offset, slave_size;
 	const struct soc_device_attribute *soc;
@@ -3566,8 +3566,7 @@ static int cpsw_probe(struct platform_device *pdev)
 	}
 	cpsw->bus_freq_mhz = clk_get_rate(clk) / 1000000;
 
-	ss_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ss_regs = devm_ioremap_resource(&pdev->dev, ss_res);
+	ss_regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ss_regs)) {
 		ret = PTR_ERR(ss_regs);
 		goto clean_dt_ret;
@@ -3576,8 +3575,7 @@ static int cpsw_probe(struct platform_device *pdev)
 
 	cpsw->version = readl(&cpsw->regs->id_ver);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	cpsw->wr_regs = devm_ioremap_resource(&pdev->dev, res);
+	cpsw->wr_regs = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(cpsw->wr_regs)) {
 		ret = PTR_ERR(cpsw->wr_regs);
 		goto clean_dt_ret;

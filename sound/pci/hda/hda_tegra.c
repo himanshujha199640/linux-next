@@ -333,8 +333,7 @@ static int hda_tegra_init_chip(struct azx *chip, struct platform_device *pdev)
 	struct device *dev = hda->dev;
 	struct resource *res;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	hda->regs = devm_ioremap_resource(dev, res);
+	hda->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(hda->regs))
 		return PTR_ERR(hda->regs);
 

@@ -1403,8 +1403,7 @@ static int rcar_drif_probe(struct platform_device *pdev)
 	}
 
 	/* Register map */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ch->base = devm_ioremap_resource(&pdev->dev, res);
+	ch->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ch->base))
 		return PTR_ERR(ch->base);
 

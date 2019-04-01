@@ -462,8 +462,7 @@ static int stm32_adc_probe(struct platform_device *pdev)
 	priv->cfg = (const struct stm32_adc_priv_cfg *)
 		of_match_device(dev->driver->of_match_table, dev)->data;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	priv->common.base = devm_ioremap_resource(&pdev->dev, res);
+	priv->common.base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(priv->common.base))
 		return PTR_ERR(priv->common.base);
 	priv->common.phys_base = res->start;

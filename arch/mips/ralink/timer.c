@@ -98,7 +98,6 @@ static int rt_timer_enable(struct rt_timer *rt)
 
 static int rt_timer_probe(struct platform_device *pdev)
 {
-	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	struct rt_timer *rt;
 	struct clk *clk;
 
@@ -114,7 +113,7 @@ static int rt_timer_probe(struct platform_device *pdev)
 		return rt->irq;
 	}
 
-	rt->membase = devm_ioremap_resource(&pdev->dev, res);
+	rt->membase = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(rt->membase))
 		return PTR_ERR(rt->membase);
 

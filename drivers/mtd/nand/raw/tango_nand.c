@@ -620,7 +620,6 @@ static int tango_nand_probe(struct platform_device *pdev)
 {
 	int err;
 	struct clk *clk;
-	struct resource *res;
 	struct tango_nfc *nfc;
 	struct device_node *np;
 
@@ -628,18 +627,15 @@ static int tango_nand_probe(struct platform_device *pdev)
 	if (!nfc)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	nfc->reg_base = devm_ioremap_resource(&pdev->dev, res);
+	nfc->reg_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(nfc->reg_base))
 		return PTR_ERR(nfc->reg_base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	nfc->mem_base = devm_ioremap_resource(&pdev->dev, res);
+	nfc->mem_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(nfc->mem_base))
 		return PTR_ERR(nfc->mem_base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-	nfc->pbus_base = devm_ioremap_resource(&pdev->dev, res);
+	nfc->pbus_base = devm_platform_ioremap_resource(pdev, 2);
 	if (IS_ERR(nfc->pbus_base))
 		return PTR_ERR(nfc->pbus_base);
 

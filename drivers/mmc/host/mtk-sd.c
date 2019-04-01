@@ -2108,7 +2108,6 @@ static int msdc_drv_probe(struct platform_device *pdev)
 {
 	struct mmc_host *mmc;
 	struct msdc_host *host;
-	struct resource *res;
 	int ret;
 
 	if (!pdev->dev.of_node) {
@@ -2126,15 +2125,13 @@ static int msdc_drv_probe(struct platform_device *pdev)
 	if (ret)
 		goto host_free;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	host->base = devm_ioremap_resource(&pdev->dev, res);
+	host->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(host->base)) {
 		ret = PTR_ERR(host->base);
 		goto host_free;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	host->top_base = devm_ioremap_resource(&pdev->dev, res);
+	host->top_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(host->top_base))
 		host->top_base = NULL;
 

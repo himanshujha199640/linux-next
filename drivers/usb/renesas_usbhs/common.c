@@ -628,7 +628,7 @@ static int usbhs_probe(struct platform_device *pdev)
 	struct renesas_usbhs_platform_info *info = renesas_usbhs_get_info(pdev);
 	struct renesas_usbhs_driver_callback *dfunc;
 	struct usbhs_priv *priv;
-	struct resource *res, *irq_res;
+	struct resource *irq_res;
 	int ret;
 
 	/* check device node */
@@ -653,8 +653,7 @@ static int usbhs_probe(struct platform_device *pdev)
 	if (!priv)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	priv->base = devm_ioremap_resource(&pdev->dev, res);
+	priv->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(priv->base))
 		return PTR_ERR(priv->base);
 

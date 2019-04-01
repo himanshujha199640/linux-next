@@ -608,8 +608,7 @@ static int rockchip_spi_probe(struct platform_device *pdev)
 	rs = spi_master_get_devdata(master);
 
 	/* Get basic io resource and map it */
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	rs->regs = devm_ioremap_resource(&pdev->dev, mem);
+	rs->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(rs->regs)) {
 		ret =  PTR_ERR(rs->regs);
 		goto err_put_master;

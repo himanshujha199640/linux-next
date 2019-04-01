@@ -657,8 +657,7 @@ static int ar933x_uart_probe(struct platform_device *pdev)
 
 	port = &up->port;
 
-	mem_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	port->membase = devm_ioremap_resource(&pdev->dev, mem_res);
+	port->membase = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(port->membase))
 		return PTR_ERR(port->membase);
 

@@ -661,7 +661,7 @@ static void spear13xx_pcie_device_init(struct spear_pcie_gadget_config *config)
 
 static int spear_pcie_gadget_probe(struct platform_device *pdev)
 {
-	struct resource *res0, *res1;
+	struct resource *res1;
 	unsigned int status = 0;
 	int irq;
 	struct clk *clk;
@@ -682,8 +682,7 @@ static int spear_pcie_gadget_probe(struct platform_device *pdev)
 	config = &target->config;
 
 	/* get resource for application registers*/
-	res0 = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	config->va_app_base = devm_ioremap_resource(&pdev->dev, res0);
+	config->va_app_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(config->va_app_base)) {
 		dev_err(&pdev->dev, "ioremap fail\n");
 		return PTR_ERR(config->va_app_base);

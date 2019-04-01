@@ -2068,8 +2068,7 @@ static int xudc_probe(struct platform_device *pdev)
 	udc->req->usb_req.buf = buff;
 
 	/* Map the registers */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	udc->addr = devm_ioremap_resource(&pdev->dev, res);
+	udc->addr = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(udc->addr))
 		return PTR_ERR(udc->addr);
 

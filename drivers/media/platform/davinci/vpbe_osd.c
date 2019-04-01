@@ -1560,8 +1560,7 @@ static int osd_probe(struct platform_device *pdev)
 	osd->dev = &pdev->dev;
 	osd->vpbe_type = pdev_id->driver_data;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	osd->osd_base = devm_ioremap_resource(&pdev->dev, res);
+	osd->osd_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(osd->osd_base))
 		return PTR_ERR(osd->osd_base);
 

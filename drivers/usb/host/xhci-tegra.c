@@ -988,7 +988,7 @@ static int tegra_xusb_powerdomain_init(struct device *dev,
 static int tegra_xusb_probe(struct platform_device *pdev)
 {
 	struct tegra_xusb_mbox_msg msg;
-	struct resource *res, *regs;
+	struct resource *regs;
 	struct tegra_xusb *tegra;
 	struct xhci_hcd *xhci;
 	unsigned int i, j, k;
@@ -1005,18 +1005,15 @@ static int tegra_xusb_probe(struct platform_device *pdev)
 	mutex_init(&tegra->lock);
 	tegra->dev = &pdev->dev;
 
-	regs = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	tegra->regs = devm_ioremap_resource(&pdev->dev, regs);
+	tegra->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(tegra->regs))
 		return PTR_ERR(tegra->regs);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	tegra->fpci_base = devm_ioremap_resource(&pdev->dev, res);
+	tegra->fpci_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(tegra->fpci_base))
 		return PTR_ERR(tegra->fpci_base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-	tegra->ipfs_base = devm_ioremap_resource(&pdev->dev, res);
+	tegra->ipfs_base = devm_platform_ioremap_resource(pdev, 2);
 	if (IS_ERR(tegra->ipfs_base))
 		return PTR_ERR(tegra->ipfs_base);
 

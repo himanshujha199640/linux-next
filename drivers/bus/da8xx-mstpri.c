@@ -216,8 +216,7 @@ static int da8xx_mstpri_probe(struct platform_device *pdev)
 	u32 reg;
 	int i;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	mstpri = devm_ioremap_resource(dev, res);
+	mstpri = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(mstpri)) {
 		dev_err(dev, "unable to map MSTPRI registers\n");
 		return PTR_ERR(mstpri);

@@ -315,8 +315,7 @@ static int ast_vhub_probe(struct platform_device *pdev)
 	spin_lock_init(&vhub->lock);
 	vhub->pdev = pdev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	vhub->regs = devm_ioremap_resource(&pdev->dev, res);
+	vhub->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(vhub->regs)) {
 		dev_err(&pdev->dev, "Failed to map resources\n");
 		return PTR_ERR(vhub->regs);

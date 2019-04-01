@@ -285,8 +285,7 @@ static int spdif_out_probe(struct platform_device *pdev)
 	if (!host)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	host->io_base = devm_ioremap_resource(&pdev->dev, res);
+	host->io_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(host->io_base))
 		return PTR_ERR(host->io_base);
 

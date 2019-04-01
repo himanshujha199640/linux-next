@@ -769,8 +769,7 @@ static int v3_pci_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	regs = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	v3->base = devm_ioremap_resource(dev, regs);
+	v3->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(v3->base))
 		return PTR_ERR(v3->base);
 	/*

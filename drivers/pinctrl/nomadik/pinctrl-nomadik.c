@@ -1044,7 +1044,6 @@ static struct nmk_gpio_chip *nmk_gpio_populate_chip(struct device_node *np,
 	struct nmk_gpio_chip *nmk_chip;
 	struct platform_device *gpio_pdev;
 	struct gpio_chip *chip;
-	struct resource *res;
 	struct clk *clk;
 	void __iomem *base;
 	u32 id;
@@ -1080,8 +1079,7 @@ static struct nmk_gpio_chip *nmk_gpio_populate_chip(struct device_node *np,
 	chip->label = dev_name(&gpio_pdev->dev);
 	chip->parent = &gpio_pdev->dev;
 
-	res = platform_get_resource(gpio_pdev, IORESOURCE_MEM, 0);
-	base = devm_ioremap_resource(&pdev->dev, res);
+	base = devm_platform_ioremap_resource(gpio_pdev, 0);
 	if (IS_ERR(base)) {
 		platform_device_put(gpio_pdev);
 		return ERR_CAST(base);

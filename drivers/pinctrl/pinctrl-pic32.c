@@ -2153,7 +2153,6 @@ static struct pic32_gpio_bank pic32_gpio_banks[] = {
 static int pic32_pinctrl_probe(struct platform_device *pdev)
 {
 	struct pic32_pinctrl *pctl;
-	struct resource *res;
 	int ret;
 
 	pctl = devm_kzalloc(&pdev->dev, sizeof(*pctl), GFP_KERNEL);
@@ -2162,8 +2161,7 @@ static int pic32_pinctrl_probe(struct platform_device *pdev)
 	pctl->dev = &pdev->dev;
 	dev_set_drvdata(&pdev->dev, pctl);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	pctl->reg_base = devm_ioremap_resource(&pdev->dev, res);
+	pctl->reg_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(pctl->reg_base))
 		return PTR_ERR(pctl->reg_base);
 
@@ -2210,7 +2208,6 @@ static int pic32_gpio_probe(struct platform_device *pdev)
 	struct pic32_gpio_bank *bank;
 	u32 id;
 	int irq, ret;
-	struct resource *res;
 
 	if (of_property_read_u32(np, "microchip,gpio-bank", &id)) {
 		dev_err(&pdev->dev, "microchip,gpio-bank property not found\n");
@@ -2224,8 +2221,7 @@ static int pic32_gpio_probe(struct platform_device *pdev)
 
 	bank = &pic32_gpio_banks[id];
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	bank->reg_base = devm_ioremap_resource(&pdev->dev, res);
+	bank->reg_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(bank->reg_base))
 		return PTR_ERR(bank->reg_base);
 

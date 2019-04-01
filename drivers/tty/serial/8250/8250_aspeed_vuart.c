@@ -320,8 +320,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
 	vuart->dev = &pdev->dev;
 	timer_setup(&vuart->unthrottle_timer, aspeed_vuart_unthrottle_exp, 0);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	vuart->regs = devm_ioremap_resource(&pdev->dev, res);
+	vuart->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(vuart->regs))
 		return PTR_ERR(vuart->regs);
 

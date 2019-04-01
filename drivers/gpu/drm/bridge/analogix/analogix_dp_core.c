@@ -1523,7 +1523,6 @@ analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
 {
 	struct platform_device *pdev = to_platform_device(dev);
 	struct analogix_dp_device *dp;
-	struct resource *res;
 	unsigned int irq_flags;
 	int ret;
 
@@ -1577,9 +1576,7 @@ analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
 
 	clk_prepare_enable(dp->clock);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-
-	dp->reg_base = devm_ioremap_resource(&pdev->dev, res);
+	dp->reg_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(dp->reg_base))
 		return ERR_CAST(dp->reg_base);
 

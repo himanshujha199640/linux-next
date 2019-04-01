@@ -1442,8 +1442,7 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 		}
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	priv->addr = devm_ioremap_resource(&pdev->dev, res);
+	priv->addr = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(priv->addr))
 		return PTR_ERR(priv->addr);
 

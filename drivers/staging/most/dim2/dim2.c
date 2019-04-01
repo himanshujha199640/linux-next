@@ -774,8 +774,7 @@ static int dim2_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	dev->io_base = devm_ioremap_resource(&pdev->dev, res);
+	dev->io_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(dev->io_base))
 		return PTR_ERR(dev->io_base);
 

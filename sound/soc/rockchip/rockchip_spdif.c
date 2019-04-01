@@ -332,8 +332,7 @@ static int rk_spdif_probe(struct platform_device *pdev)
 		goto err_disable_clocks;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	regs = devm_ioremap_resource(&pdev->dev, res);
+	regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(regs)) {
 		ret = PTR_ERR(regs);
 		goto err_disable_clocks;

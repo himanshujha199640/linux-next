@@ -1057,8 +1057,7 @@ static int tegra_spi_probe(struct platform_device *pdev)
 	tspi->dev = &pdev->dev;
 	spin_lock_init(&tspi->lock);
 
-	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	tspi->base = devm_ioremap_resource(&pdev->dev, r);
+	tspi->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(tspi->base)) {
 		ret = PTR_ERR(tspi->base);
 		goto exit_free_master;

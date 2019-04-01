@@ -274,8 +274,7 @@ static int w5100_mmio_init(struct net_device *ndev)
 
 	spin_lock_init(&mmio_priv->reg_lock);
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	mmio_priv->base = devm_ioremap_resource(&pdev->dev, mem);
+	mmio_priv->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(mmio_priv->base))
 		return PTR_ERR(mmio_priv->base);
 

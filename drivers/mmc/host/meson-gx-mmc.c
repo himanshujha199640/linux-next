@@ -1234,7 +1234,6 @@ static const struct mmc_host_ops meson_mmc_ops = {
 
 static int meson_mmc_probe(struct platform_device *pdev)
 {
-	struct resource *res;
 	struct meson_host *host;
 	struct mmc_host *mmc;
 	int ret;
@@ -1275,8 +1274,7 @@ static int meson_mmc_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	host->regs = devm_ioremap_resource(&pdev->dev, res);
+	host->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(host->regs)) {
 		ret = PTR_ERR(host->regs);
 		goto free_host;

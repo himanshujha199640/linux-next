@@ -1318,8 +1318,7 @@ static int bdisp_probe(struct platform_device *pdev)
 	mutex_init(&bdisp->lock);
 
 	/* get resources */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	bdisp->regs = devm_ioremap_resource(dev, res);
+	bdisp->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(bdisp->regs)) {
 		dev_err(dev, "failed to get regs\n");
 		return PTR_ERR(bdisp->regs);

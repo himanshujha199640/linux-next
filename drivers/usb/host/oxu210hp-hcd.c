@@ -3791,8 +3791,7 @@ static int oxu_drv_probe(struct platform_device *pdev)
 	irq = res->start;
 	dev_dbg(&pdev->dev, "IRQ resource %d\n", irq);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	base = devm_ioremap_resource(&pdev->dev, res);
+	base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(base)) {
 		ret = PTR_ERR(base);
 		goto error;

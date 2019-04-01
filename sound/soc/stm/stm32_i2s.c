@@ -803,8 +803,7 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
 	else
 		return -EINVAL;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	i2s->base = devm_ioremap_resource(&pdev->dev, res);
+	i2s->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(i2s->base))
 		return PTR_ERR(i2s->base);
 

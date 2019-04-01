@@ -1314,7 +1314,6 @@ omap_i2c_probe(struct platform_device *pdev)
 {
 	struct omap_i2c_dev	*omap;
 	struct i2c_adapter	*adap;
-	struct resource		*mem;
 	const struct omap_i2c_bus_platform_data *pdata =
 		dev_get_platdata(&pdev->dev);
 	struct device_node	*node = pdev->dev.of_node;
@@ -1334,8 +1333,7 @@ omap_i2c_probe(struct platform_device *pdev)
 	if (!omap)
 		return -ENOMEM;
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	omap->base = devm_ioremap_resource(&pdev->dev, mem);
+	omap->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(omap->base))
 		return PTR_ERR(omap->base);
 

@@ -937,12 +937,10 @@ static int ade_plane_init(struct drm_device *dev, struct ade_plane *aplane,
 
 static int ade_dts_parse(struct platform_device *pdev, struct ade_hw_ctx *ctx)
 {
-	struct resource *res;
 	struct device *dev = &pdev->dev;
 	struct device_node *np = pdev->dev.of_node;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ctx->base = devm_ioremap_resource(dev, res);
+	ctx->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ctx->base)) {
 		DRM_ERROR("failed to remap ade io base\n");
 		return  PTR_ERR(ctx->base);
