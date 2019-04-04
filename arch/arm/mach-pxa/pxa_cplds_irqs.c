@@ -110,7 +110,6 @@ static int cplds_resume(struct platform_device *pdev)
 
 static int cplds_probe(struct platform_device *pdev)
 {
-	struct resource *res;
 	struct cplds *fpga;
 	int ret;
 	int base_irq;
@@ -128,8 +127,7 @@ static int cplds_probe(struct platform_device *pdev)
 	if (base_irq < 0)
 		base_irq = 0;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	fpga->base = devm_ioremap_resource(&pdev->dev, res);
+	fpga->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(fpga->base))
 		return PTR_ERR(fpga->base);
 

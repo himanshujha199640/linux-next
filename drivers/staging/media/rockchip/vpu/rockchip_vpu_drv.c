@@ -378,7 +378,6 @@ static int rockchip_vpu_probe(struct platform_device *pdev)
 {
 	const struct of_device_id *match;
 	struct rockchip_vpu_dev *vpu;
-	struct resource *res;
 	int i, ret;
 
 	vpu = devm_kzalloc(&pdev->dev, sizeof(*vpu), GFP_KERNEL);
@@ -402,8 +401,7 @@ static int rockchip_vpu_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
-	res = platform_get_resource(vpu->pdev, IORESOURCE_MEM, 0);
-	vpu->base = devm_ioremap_resource(vpu->dev, res);
+	vpu->base = devm_platform_ioremap_resource(vpu->pdev, 0);
 	if (IS_ERR(vpu->base))
 		return PTR_ERR(vpu->base);
 	vpu->enc_base = vpu->base + vpu->variant->enc_offset;

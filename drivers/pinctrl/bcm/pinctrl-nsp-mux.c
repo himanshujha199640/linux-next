@@ -586,8 +586,7 @@ static int nsp_pinmux_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-	pinctrl->base2 = devm_ioremap_resource(&pdev->dev, res);
+	pinctrl->base2 = devm_platform_ioremap_resource(pdev, 2);
 	if (IS_ERR(pinctrl->base2))
 		return PTR_ERR(pinctrl->base2);
 

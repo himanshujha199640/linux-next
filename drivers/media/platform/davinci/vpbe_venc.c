@@ -662,9 +662,7 @@ static int venc_probe(struct platform_device *pdev)
 		return PTR_ERR(venc->venc_base);
 
 	if (venc->venc_type != VPBE_VERSION_1) {
-		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-
-		venc->vdaccfg_reg = devm_ioremap_resource(&pdev->dev, res);
+		venc->vdaccfg_reg = devm_platform_ioremap_resource(pdev, 1);
 		if (IS_ERR(venc->vdaccfg_reg))
 			return PTR_ERR(venc->vdaccfg_reg);
 	}

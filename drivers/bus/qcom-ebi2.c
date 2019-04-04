@@ -335,8 +335,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
 		goto err_disable_clk;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	ebi2_xmem = devm_ioremap_resource(dev, res);
+	ebi2_xmem = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(ebi2_xmem)) {
 		ret = PTR_ERR(ebi2_xmem);
 		goto err_disable_clk;

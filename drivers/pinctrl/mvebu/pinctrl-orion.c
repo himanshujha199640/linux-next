@@ -233,8 +233,7 @@ static int orion_pinctrl_probe(struct platform_device *pdev)
 	if (IS_ERR(mpp_base))
 		return PTR_ERR(mpp_base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	high_mpp_base = devm_ioremap_resource(&pdev->dev, res);
+	high_mpp_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(high_mpp_base))
 		return PTR_ERR(high_mpp_base);
 

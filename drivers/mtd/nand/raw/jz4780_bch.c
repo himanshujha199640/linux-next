@@ -335,14 +335,12 @@ static int jz4780_bch_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct jz4780_bch *bch;
-	struct resource *res;
 
 	bch = devm_kzalloc(dev, sizeof(*bch), GFP_KERNEL);
 	if (!bch)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	bch->base = devm_ioremap_resource(dev, res);
+	bch->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(bch->base))
 		return PTR_ERR(bch->base);
 

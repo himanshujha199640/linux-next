@@ -97,7 +97,6 @@ MODULE_DEVICE_TABLE(of, sun4i_gpadc_of_match);
 static int sun4i_gpadc_probe(struct platform_device *pdev)
 {
 	struct sun4i_gpadc_dev *dev;
-	struct resource *mem;
 	const struct of_device_id *of_id;
 	const struct mfd_cell *cells;
 	unsigned int irq, size;
@@ -128,8 +127,7 @@ static int sun4i_gpadc_probe(struct platform_device *pdev)
 	if (!dev)
 		return -ENOMEM;
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	dev->base = devm_ioremap_resource(&pdev->dev, mem);
+	dev->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(dev->base))
 		return PTR_ERR(dev->base);
 

@@ -137,7 +137,6 @@ static int apbps2_of_probe(struct platform_device *ofdev)
 	struct apbps2_priv *priv;
 	int irq, err;
 	u32 freq_hz;
-	struct resource *res;
 
 	priv = devm_kzalloc(&ofdev->dev, sizeof(*priv), GFP_KERNEL);
 	if (!priv) {
@@ -146,8 +145,7 @@ static int apbps2_of_probe(struct platform_device *ofdev)
 	}
 
 	/* Find Device Address */
-	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
-	priv->regs = devm_ioremap_resource(&ofdev->dev, res);
+	priv->regs = devm_platform_ioremap_resource(ofdev, 0);
 	if (IS_ERR(priv->regs))
 		return PTR_ERR(priv->regs);
 

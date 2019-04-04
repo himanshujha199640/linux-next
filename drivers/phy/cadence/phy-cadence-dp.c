@@ -464,8 +464,7 @@ static int cdns_dp_phy_probe(struct platform_device *pdev)
 	if (IS_ERR(cdns_phy->base))
 		return PTR_ERR(cdns_phy->base);
 
-	regs = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	cdns_phy->sd_base = devm_ioremap_resource(&pdev->dev, regs);
+	cdns_phy->sd_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(cdns_phy->sd_base))
 		return PTR_ERR(cdns_phy->sd_base);
 

@@ -524,7 +524,6 @@ static int jz4740_dma_probe(struct platform_device *pdev)
 	struct jz4740_dma_dev *dmadev;
 	struct dma_device *dd;
 	unsigned int i;
-	struct resource *res;
 	int ret;
 	int irq;
 
@@ -534,8 +533,7 @@ static int jz4740_dma_probe(struct platform_device *pdev)
 
 	dd = &dmadev->ddev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	dmadev->base = devm_ioremap_resource(&pdev->dev, res);
+	dmadev->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(dmadev->base))
 		return PTR_ERR(dmadev->base);
 

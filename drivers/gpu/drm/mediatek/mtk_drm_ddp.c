@@ -562,7 +562,6 @@ static int mtk_ddp_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct mtk_ddp *ddp;
-	struct resource *regs;
 	int i;
 
 	ddp = devm_kzalloc(dev, sizeof(*ddp), GFP_KERNEL);
@@ -578,8 +577,7 @@ static int mtk_ddp_probe(struct platform_device *pdev)
 		return PTR_ERR(ddp->clk);
 	}
 
-	regs = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ddp->regs = devm_ioremap_resource(dev, regs);
+	ddp->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ddp->regs)) {
 		dev_err(dev, "Failed to map mutex registers\n");
 		return PTR_ERR(ddp->regs);

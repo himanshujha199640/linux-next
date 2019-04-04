@@ -796,8 +796,7 @@ static int mtk_i2c_probe(struct platform_device *pdev)
 	if (IS_ERR(i2c->base))
 		return PTR_ERR(i2c->base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	i2c->pdmabase = devm_ioremap_resource(&pdev->dev, res);
+	i2c->pdmabase = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(i2c->pdmabase))
 		return PTR_ERR(i2c->pdmabase);
 

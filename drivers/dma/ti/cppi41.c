@@ -1062,8 +1062,7 @@ static int cppi41_dma_probe(struct platform_device *pdev)
 	if (IS_ERR(cdd->sched_mem))
 		return PTR_ERR(cdd->sched_mem);
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, index + 2);
-	cdd->qmgr_mem = devm_ioremap_resource(dev, mem);
+	cdd->qmgr_mem = devm_platform_ioremap_resource(pdev, index + 2);
 	if (IS_ERR(cdd->qmgr_mem))
 		return PTR_ERR(cdd->qmgr_mem);
 

@@ -233,8 +233,7 @@ static int axs10x_pll_clk_probe(struct platform_device *pdev)
 	if (IS_ERR(pll_clk->base))
 		return PTR_ERR(pll_clk->base);
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	pll_clk->lock = devm_ioremap_resource(dev, mem);
+	pll_clk->lock = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(pll_clk->lock))
 		return PTR_ERR(pll_clk->lock);
 

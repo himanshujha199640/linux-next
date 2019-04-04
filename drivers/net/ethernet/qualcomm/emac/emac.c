@@ -578,8 +578,7 @@ static int emac_probe_resources(struct platform_device *pdev,
 		return PTR_ERR(adpt->base);
 
 	/* CSR register address */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	adpt->csr = devm_ioremap_resource(&pdev->dev, res);
+	adpt->csr = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(adpt->csr))
 		return PTR_ERR(adpt->csr);
 

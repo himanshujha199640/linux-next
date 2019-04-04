@@ -30,7 +30,6 @@ static int plat_nand_probe(struct platform_device *pdev)
 	struct platform_nand_data *pdata = dev_get_platdata(&pdev->dev);
 	struct plat_nand_data *data;
 	struct mtd_info *mtd;
-	struct resource *res;
 	const char **part_types;
 	int err = 0;
 
@@ -50,8 +49,7 @@ static int plat_nand_probe(struct platform_device *pdev)
 	if (!data)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	data->io_base = devm_ioremap_resource(&pdev->dev, res);
+	data->io_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(data->io_base))
 		return PTR_ERR(data->io_base);
 

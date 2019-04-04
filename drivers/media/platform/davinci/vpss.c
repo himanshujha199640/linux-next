@@ -429,10 +429,8 @@ static int vpss_probe(struct platform_device *pdev)
 		return PTR_ERR(oper_cfg.vpss_regs_base0);
 
 	if (oper_cfg.platform == DM355 || oper_cfg.platform == DM365) {
-		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-
-		oper_cfg.vpss_regs_base1 = devm_ioremap_resource(&pdev->dev,
-								 res);
+		oper_cfg.vpss_regs_base1 = devm_platform_ioremap_resource(pdev,
+									  1);
 		if (IS_ERR(oper_cfg.vpss_regs_base1))
 			return PTR_ERR(oper_cfg.vpss_regs_base1);
 	}

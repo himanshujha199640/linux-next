@@ -1147,8 +1147,7 @@ static int fsl_qdma_probe(struct platform_device *pdev)
 	if (IS_ERR(fsl_qdma->status_base))
 		return PTR_ERR(fsl_qdma->status_base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-	fsl_qdma->block_base = devm_ioremap_resource(&pdev->dev, res);
+	fsl_qdma->block_base = devm_platform_ioremap_resource(pdev, 2);
 	if (IS_ERR(fsl_qdma->block_base))
 		return PTR_ERR(fsl_qdma->block_base);
 	fsl_qdma->queue = fsl_qdma_alloc_queue_resources(pdev, fsl_qdma);

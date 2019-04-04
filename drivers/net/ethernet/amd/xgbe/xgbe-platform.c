@@ -393,8 +393,8 @@ static int xgbe_platform_probe(struct platform_device *pdev)
 	if (netif_msg_probe(pdata))
 		dev_dbg(dev, "sir0_regs  = %p\n", pdata->sir0_regs);
 
-	res = platform_get_resource(phy_pdev, IORESOURCE_MEM, phy_memnum++);
-	pdata->sir1_regs = devm_ioremap_resource(dev, res);
+	pdata->sir1_regs = devm_platform_ioremap_resource(phy_pdev,
+							  phy_memnum++);
 	if (IS_ERR(pdata->sir1_regs)) {
 		dev_err(dev, "sir1 ioremap failed\n");
 		ret = PTR_ERR(pdata->sir1_regs);

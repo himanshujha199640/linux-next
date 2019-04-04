@@ -267,7 +267,6 @@ static int jz4780_nemc_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct jz4780_nemc *nemc;
-	struct resource *res;
 	struct device_node *child;
 	const __be32 *prop;
 	unsigned int bank;
@@ -281,8 +280,7 @@ static int jz4780_nemc_probe(struct platform_device *pdev)
 	spin_lock_init(&nemc->lock);
 	nemc->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	nemc->base = devm_ioremap_resource(dev, res);
+	nemc->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(nemc->base)) {
 		dev_err(dev, "failed to get I/O memory\n");
 		return PTR_ERR(nemc->base);

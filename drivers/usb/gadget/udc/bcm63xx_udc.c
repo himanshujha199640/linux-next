@@ -2303,8 +2303,7 @@ static int bcm63xx_udc_probe(struct platform_device *pdev)
 	if (IS_ERR(udc->usbd_regs))
 		return PTR_ERR(udc->usbd_regs);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	udc->iudma_regs = devm_ioremap_resource(dev, res);
+	udc->iudma_regs = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(udc->iudma_regs))
 		return PTR_ERR(udc->iudma_regs);
 

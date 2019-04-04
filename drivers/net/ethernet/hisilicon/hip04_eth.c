@@ -812,7 +812,6 @@ static int hip04_mac_probe(struct platform_device *pdev)
 	struct of_phandle_args arg;
 	struct net_device *ndev;
 	struct hip04_priv *priv;
-	struct resource *res;
 	int irq;
 	int ret;
 
@@ -825,8 +824,7 @@ static int hip04_mac_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, ndev);
 	SET_NETDEV_DEV(ndev, &pdev->dev);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	priv->base = devm_ioremap_resource(d, res);
+	priv->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(priv->base)) {
 		ret = PTR_ERR(priv->base);
 		goto init_fail;

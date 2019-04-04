@@ -852,8 +852,8 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
 	if (IS_ERR(pmecc->regs.base))
 		return ERR_CAST(pmecc->regs.base);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, errloc_res_idx);
-	pmecc->regs.errloc = devm_ioremap_resource(dev, res);
+	pmecc->regs.errloc = devm_platform_ioremap_resource(pdev,
+							    errloc_res_idx);
 	if (IS_ERR(pmecc->regs.errloc))
 		return ERR_CAST(pmecc->regs.errloc);
 

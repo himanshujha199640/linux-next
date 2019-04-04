@@ -38,8 +38,7 @@ static int clps711x_gpio_probe(struct platform_device *pdev)
 	if (IS_ERR(dat))
 		return PTR_ERR(dat);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	dir = devm_ioremap_resource(&pdev->dev, res);
+	dir = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(dir))
 		return PTR_ERR(dir);
 

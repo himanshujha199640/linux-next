@@ -136,8 +136,7 @@ static int ts72xx_wdt_probe(struct platform_device *pdev)
 	if (IS_ERR(priv->control_reg))
 		return PTR_ERR(priv->control_reg);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	priv->feed_reg = devm_ioremap_resource(&pdev->dev, res);
+	priv->feed_reg = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(priv->feed_reg))
 		return PTR_ERR(priv->feed_reg);
 

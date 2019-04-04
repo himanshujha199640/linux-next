@@ -425,7 +425,6 @@ static int zx_vga_bind(struct device *dev, struct device *master, void *data)
 {
 	struct platform_device *pdev = to_platform_device(dev);
 	struct drm_device *drm = data;
-	struct resource *res;
 	struct zx_vga *vga;
 	int irq;
 	int ret;
@@ -437,8 +436,7 @@ static int zx_vga_bind(struct device *dev, struct device *master, void *data)
 	vga->dev = dev;
 	dev_set_drvdata(dev, vga);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	vga->mmio = devm_ioremap_resource(dev, res);
+	vga->mmio = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(vga->mmio))
 		return PTR_ERR(vga->mmio);
 

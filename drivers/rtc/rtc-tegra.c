@@ -285,7 +285,6 @@ MODULE_DEVICE_TABLE(of, tegra_rtc_dt_match);
 static int __init tegra_rtc_probe(struct platform_device *pdev)
 {
 	struct tegra_rtc_info *info;
-	struct resource *res;
 	int ret;
 
 	info = devm_kzalloc(&pdev->dev, sizeof(struct tegra_rtc_info),
@@ -293,8 +292,7 @@ static int __init tegra_rtc_probe(struct platform_device *pdev)
 	if (!info)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	info->rtc_base = devm_ioremap_resource(&pdev->dev, res);
+	info->rtc_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(info->rtc_base))
 		return PTR_ERR(info->rtc_base);
 

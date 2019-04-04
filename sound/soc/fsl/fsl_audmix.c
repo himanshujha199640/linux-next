@@ -448,7 +448,6 @@ static const struct regmap_config fsl_audmix_regmap_config = {
 static int fsl_audmix_probe(struct platform_device *pdev)
 {
 	struct fsl_audmix *priv;
-	struct resource *res;
 	void __iomem *regs;
 	int ret;
 	const char *sprop;
@@ -458,8 +457,7 @@ static int fsl_audmix_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 	/* Get the addresses */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	regs = devm_ioremap_resource(&pdev->dev, res);
+	regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(regs))
 		return PTR_ERR(regs);
 

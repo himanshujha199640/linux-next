@@ -103,8 +103,7 @@ static int hsdk_reset_probe(struct platform_device *pdev)
 	if (IS_ERR(rst->regs_ctl))
 		return PTR_ERR(rst->regs_ctl);
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	rst->regs_rst = devm_ioremap_resource(&pdev->dev, mem);
+	rst->regs_rst = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(rst->regs_rst))
 		return PTR_ERR(rst->regs_rst);
 
