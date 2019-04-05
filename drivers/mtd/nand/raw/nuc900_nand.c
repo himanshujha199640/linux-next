@@ -237,7 +237,6 @@ static int nuc900_nand_probe(struct platform_device *pdev)
 	struct nuc900_nand *nuc900_nand;
 	struct nand_chip *chip;
 	struct mtd_info *mtd;
-	struct resource *res;
 
 	nuc900_nand = devm_kzalloc(&pdev->dev, sizeof(struct nuc900_nand),
 				   GFP_KERNEL);
@@ -264,8 +263,7 @@ static int nuc900_nand_probe(struct platform_device *pdev)
 	chip->ecc.mode		= NAND_ECC_SOFT;
 	chip->ecc.algo		= NAND_ECC_HAMMING;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	nuc900_nand->reg = devm_ioremap_resource(&pdev->dev, res);
+	nuc900_nand->reg = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(nuc900_nand->reg))
 		return PTR_ERR(nuc900_nand->reg);
 

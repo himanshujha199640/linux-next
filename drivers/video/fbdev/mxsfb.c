@@ -879,7 +879,6 @@ static int mxsfb_probe(struct platform_device *pdev)
 {
 	const struct of_device_id *of_id =
 			of_match_device(mxsfb_dt_ids, &pdev->dev);
-	struct resource *res;
 	struct mxsfb_info *host;
 	struct fb_info *fb_info;
 	struct fb_videomode *mode;
@@ -901,8 +900,7 @@ static int mxsfb_probe(struct platform_device *pdev)
 
 	host = fb_info->par;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	host->base = devm_ioremap_resource(&pdev->dev, res);
+	host->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(host->base)) {
 		ret = PTR_ERR(host->base);
 		goto fb_release;

@@ -297,7 +297,6 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
 	struct device_node *np = pdev->dev.of_node;
 	struct device_node *child;
 	struct device *dev = &pdev->dev;
-	struct resource *res;
 	void __iomem *ebi2_base;
 	void __iomem *ebi2_xmem;
 	struct clk *ebi2xclk;
@@ -328,15 +327,13 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
 		goto err_disable_2x_clk;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ebi2_base = devm_ioremap_resource(dev, res);
+	ebi2_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ebi2_base)) {
 		ret = PTR_ERR(ebi2_base);
 		goto err_disable_clk;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	ebi2_xmem = devm_ioremap_resource(dev, res);
+	ebi2_xmem = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(ebi2_xmem)) {
 		ret = PTR_ERR(ebi2_xmem);
 		goto err_disable_clk;

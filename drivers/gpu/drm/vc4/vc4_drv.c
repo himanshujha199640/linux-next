@@ -49,11 +49,9 @@
 /* Helper function for mapping the regs on a platform device. */
 void __iomem *vc4_ioremap_regs(struct platform_device *dev, int index)
 {
-	struct resource *res;
 	void __iomem *map;
 
-	res = platform_get_resource(dev, IORESOURCE_MEM, index);
-	map = devm_ioremap_resource(&dev->dev, res);
+	map = devm_platform_ioremap_resource(dev, index);
 	if (IS_ERR(map)) {
 		DRM_ERROR("Failed to map registers: %ld\n", PTR_ERR(map));
 		return map;

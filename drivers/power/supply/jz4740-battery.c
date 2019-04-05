@@ -246,7 +246,6 @@ static int jz_battery_probe(struct platform_device *pdev)
 	struct power_supply_config psy_cfg = {};
 	struct jz_battery *jz_battery;
 	struct power_supply_desc *battery_desc;
-	struct resource *mem;
 
 	if (!pdata) {
 		dev_err(&pdev->dev, "No platform_data supplied\n");
@@ -267,9 +266,7 @@ static int jz_battery_probe(struct platform_device *pdev)
 		return jz_battery->irq;
 	}
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-
-	jz_battery->base = devm_ioremap_resource(&pdev->dev, mem);
+	jz_battery->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(jz_battery->base))
 		return PTR_ERR(jz_battery->base);
 

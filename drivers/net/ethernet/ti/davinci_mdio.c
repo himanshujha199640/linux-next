@@ -357,7 +357,6 @@ static int davinci_mdio_probe(struct platform_device *pdev)
 	struct mdio_platform_data *pdata = dev_get_platdata(&pdev->dev);
 	struct device *dev = &pdev->dev;
 	struct davinci_mdio_data *data;
-	struct resource *res;
 	struct phy_device *phy;
 	int ret, addr;
 	int autosuspend_delay_ms = -1;
@@ -411,8 +410,7 @@ static int davinci_mdio_probe(struct platform_device *pdev)
 	dev_set_drvdata(dev, data);
 	data->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	data->regs = devm_ioremap_resource(dev, res);
+	data->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(data->regs))
 		return PTR_ERR(data->regs);
 

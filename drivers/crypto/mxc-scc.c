@@ -646,7 +646,6 @@ static void mxc_scc_crypto_unregister(void)
 static int mxc_scc_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
-	struct resource *res;
 	struct mxc_scc *scc;
 	enum mxc_scc_state state;
 	int irq;
@@ -657,8 +656,7 @@ static int mxc_scc_probe(struct platform_device *pdev)
 	if (!scc)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	scc->base = devm_ioremap_resource(dev, res);
+	scc->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(scc->base))
 		return PTR_ERR(scc->base);
 

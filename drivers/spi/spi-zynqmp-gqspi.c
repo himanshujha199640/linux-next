@@ -1018,7 +1018,6 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
 	int ret = 0;
 	struct spi_master *master;
 	struct zynqmp_qspi *xqspi;
-	struct resource *res;
 	struct device *dev = &pdev->dev;
 
 	master = spi_alloc_master(&pdev->dev, sizeof(*xqspi));
@@ -1029,8 +1028,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
 	master->dev.of_node = pdev->dev.of_node;
 	platform_set_drvdata(pdev, master);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	xqspi->regs = devm_ioremap_resource(&pdev->dev, res);
+	xqspi->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(xqspi->regs)) {
 		ret = PTR_ERR(xqspi->regs);
 		goto remove_master;

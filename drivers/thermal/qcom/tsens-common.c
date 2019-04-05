@@ -130,7 +130,6 @@ static const struct regmap_config tsens_srot_config = {
 int __init init_common(struct tsens_device *tmdev)
 {
 	void __iomem *tm_base, *srot_base;
-	struct resource *res;
 	u32 code;
 	int ret;
 	struct platform_device *op = of_find_device_by_node(tmdev->dev->of_node);
@@ -142,8 +141,7 @@ int __init init_common(struct tsens_device *tmdev)
 	if (op->num_resources > 1) {
 		/* DT with separate SROT and TM address space */
 		tmdev->tm_offset = 0;
-		res = platform_get_resource(op, IORESOURCE_MEM, 1);
-		srot_base = devm_ioremap_resource(&op->dev, res);
+		srot_base = devm_platform_ioremap_resource(op, 1);
 		if (IS_ERR(srot_base)) {
 			ret = PTR_ERR(srot_base);
 			goto err_put_device;
@@ -161,8 +159,7 @@ int __init init_common(struct tsens_device *tmdev)
 		tmdev->tm_offset = 0x1000;
 	}
 
-	res = platform_get_resource(op, IORESOURCE_MEM, 0);
-	tm_base = devm_ioremap_resource(&op->dev, res);
+	tm_base = devm_platform_ioremap_resource(op, 0);
 	if (IS_ERR(tm_base)) {
 		ret = PTR_ERR(tm_base);
 		goto err_put_device;

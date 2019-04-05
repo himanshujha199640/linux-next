@@ -143,7 +143,6 @@ static int sunxi_ir_probe(struct platform_device *pdev)
 
 	struct device *dev = &pdev->dev;
 	struct device_node *dn = dev->of_node;
-	struct resource *res;
 	struct sunxi_ir *ir;
 	u32 b_clk_freq = SUNXI_IR_BASE_CLK;
 
@@ -201,8 +200,7 @@ static int sunxi_ir_probe(struct platform_device *pdev)
 	}
 
 	/* IO */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ir->base = devm_ioremap_resource(dev, res);
+	ir->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ir->base)) {
 		dev_err(dev, "failed to map registers\n");
 		ret = PTR_ERR(ir->base);

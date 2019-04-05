@@ -368,7 +368,6 @@ static int atmel_pwm_probe(struct platform_device *pdev)
 {
 	const struct atmel_pwm_data *data;
 	struct atmel_pwm_chip *atmel_pwm;
-	struct resource *res;
 	int ret;
 
 	data = atmel_pwm_get_driver_data(pdev);
@@ -379,8 +378,7 @@ static int atmel_pwm_probe(struct platform_device *pdev)
 	if (!atmel_pwm)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	atmel_pwm->base = devm_ioremap_resource(&pdev->dev, res);
+	atmel_pwm->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(atmel_pwm->base))
 		return PTR_ERR(atmel_pwm->base);
 

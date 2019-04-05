@@ -108,7 +108,6 @@ static int __init tc_probe(struct platform_device *pdev)
 	struct atmel_tc *tc;
 	struct clk	*clk;
 	int		irq;
-	struct resource	*r;
 	unsigned int	i;
 
 	irq = platform_get_irq(pdev, 0);
@@ -129,8 +128,7 @@ static int __init tc_probe(struct platform_device *pdev)
 	if (IS_ERR(tc->slow_clk))
 		return PTR_ERR(tc->slow_clk);
 
-	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	tc->regs = devm_ioremap_resource(&pdev->dev, r);
+	tc->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(tc->regs))
 		return PTR_ERR(tc->regs);
 

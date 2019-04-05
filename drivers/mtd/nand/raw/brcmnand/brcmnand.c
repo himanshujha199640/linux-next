@@ -2443,8 +2443,7 @@ int brcmnand_probe(struct platform_device *pdev, struct brcmnand_soc *soc)
 	INIT_LIST_HEAD(&ctrl->host_list);
 
 	/* NAND register range */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ctrl->nand_base = devm_ioremap_resource(dev, res);
+	ctrl->nand_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ctrl->nand_base))
 		return PTR_ERR(ctrl->nand_base);
 

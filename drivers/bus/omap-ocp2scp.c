@@ -41,7 +41,6 @@ static int omap_ocp2scp_probe(struct platform_device *pdev)
 	int ret;
 	u32 reg;
 	void __iomem *regs;
-	struct resource *res;
 	struct device_node *np = pdev->dev.of_node;
 
 	if (np) {
@@ -68,8 +67,7 @@ static int omap_ocp2scp_probe(struct platform_device *pdev)
 	 * of SYNC2 parameter in OCP2SCP. Suggested reset value is 0x6 or more.
 	 */
 	if (!of_device_is_compatible(np, "ti,am437x-ocp2scp")) {
-		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-		regs = devm_ioremap_resource(&pdev->dev, res);
+		regs = devm_platform_ioremap_resource(pdev, 0);
 		if (IS_ERR(regs)) {
 			ret = PTR_ERR(regs);
 			goto err1;

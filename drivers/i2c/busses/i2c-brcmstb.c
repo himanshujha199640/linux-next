@@ -586,7 +586,6 @@ static int brcmstb_i2c_probe(struct platform_device *pdev)
 	int rc = 0;
 	struct brcmstb_i2c_dev *dev;
 	struct i2c_adapter *adap;
-	struct resource *iomem;
 	const char *int_name;
 
 	/* Allocate memory for private data structure */
@@ -603,8 +602,7 @@ static int brcmstb_i2c_probe(struct platform_device *pdev)
 	init_completion(&dev->done);
 
 	/* Map hardware registers */
-	iomem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	dev->base = devm_ioremap_resource(dev->device, iomem);
+	dev->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(dev->base)) {
 		rc = -ENOMEM;
 		goto probe_errorout;

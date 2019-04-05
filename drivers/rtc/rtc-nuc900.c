@@ -226,7 +226,6 @@ static const struct rtc_class_ops nuc900_rtc_ops = {
 
 static int __init nuc900_rtc_probe(struct platform_device *pdev)
 {
-	struct resource *res;
 	struct nuc900_rtc *nuc900_rtc;
 
 	nuc900_rtc = devm_kzalloc(&pdev->dev, sizeof(struct nuc900_rtc),
@@ -234,8 +233,7 @@ static int __init nuc900_rtc_probe(struct platform_device *pdev)
 	if (!nuc900_rtc)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	nuc900_rtc->rtc_reg = devm_ioremap_resource(&pdev->dev, res);
+	nuc900_rtc->rtc_reg = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(nuc900_rtc->rtc_reg))
 		return PTR_ERR(nuc900_rtc->rtc_reg);
 

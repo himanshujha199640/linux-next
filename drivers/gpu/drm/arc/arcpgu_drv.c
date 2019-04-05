@@ -55,7 +55,6 @@ static int arcpgu_load(struct drm_device *drm)
 	struct platform_device *pdev = to_platform_device(drm->dev);
 	struct arcpgu_drm_private *arcpgu;
 	struct device_node *encoder_node;
-	struct resource *res;
 	int ret;
 
 	arcpgu = devm_kzalloc(&pdev->dev, sizeof(*arcpgu), GFP_KERNEL);
@@ -70,8 +69,7 @@ static int arcpgu_load(struct drm_device *drm)
 
 	arcpgu_setup_mode_config(drm);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	arcpgu->regs = devm_ioremap_resource(&pdev->dev, res);
+	arcpgu->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(arcpgu->regs))
 		return PTR_ERR(arcpgu->regs);
 

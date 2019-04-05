@@ -877,8 +877,7 @@ static int s3c_onenand_probe(struct platform_device *pdev)
 	this->options |= ONENAND_SKIP_UNLOCK_CHECK;
 
 	if (onenand->type != TYPE_S5PC110) {
-		r = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-		onenand->ahb_addr = devm_ioremap_resource(&pdev->dev, r);
+		onenand->ahb_addr = devm_platform_ioremap_resource(pdev, 1);
 		if (IS_ERR(onenand->ahb_addr))
 			return PTR_ERR(onenand->ahb_addr);
 
@@ -898,8 +897,7 @@ static int s3c_onenand_probe(struct platform_device *pdev)
 		this->subpagesize = mtd->writesize;
 
 	} else { /* S5PC110 */
-		r = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-		onenand->dma_addr = devm_ioremap_resource(&pdev->dev, r);
+		onenand->dma_addr = devm_platform_ioremap_resource(pdev, 1);
 		if (IS_ERR(onenand->dma_addr))
 			return PTR_ERR(onenand->dma_addr);
 

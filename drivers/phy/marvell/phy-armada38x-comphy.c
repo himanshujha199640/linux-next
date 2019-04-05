@@ -167,15 +167,13 @@ static int a38x_comphy_probe(struct platform_device *pdev)
 	struct phy_provider *provider;
 	struct device_node *child;
 	struct a38x_comphy *priv;
-	struct resource *res;
 	void __iomem *base;
 
 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
 	if (!priv)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	base = devm_ioremap_resource(&pdev->dev, res);
+	base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(base))
 		return PTR_ERR(base);
 

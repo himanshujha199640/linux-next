@@ -271,8 +271,7 @@ static int omap_l3_probe(struct platform_device *pdev)
 			l3->l3_base[i] = l3->l3_base[i - 1];
 			continue;
 		}
-		res = platform_get_resource(pdev, IORESOURCE_MEM, res_idx);
-		l3->l3_base[i] = devm_ioremap_resource(&pdev->dev, res);
+		l3->l3_base[i] = devm_platform_ioremap_resource(pdev, res_idx);
 		if (IS_ERR(l3->l3_base[i])) {
 			dev_err(l3->dev, "ioremap %d failed\n", i);
 			return PTR_ERR(l3->l3_base[i]);

@@ -1334,7 +1334,6 @@ static int cqspi_probe(struct platform_device *pdev)
 	struct device_node *np = pdev->dev.of_node;
 	struct device *dev = &pdev->dev;
 	struct cqspi_st *cqspi;
-	struct resource *res;
 	struct resource *res_ahb;
 	const struct cqspi_driver_platdata *ddata;
 	int ret;
@@ -1363,8 +1362,7 @@ static int cqspi_probe(struct platform_device *pdev)
 	}
 
 	/* Obtain and remap controller address. */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	cqspi->iobase = devm_ioremap_resource(dev, res);
+	cqspi->iobase = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(cqspi->iobase)) {
 		dev_err(dev, "Cannot remap controller address.\n");
 		return PTR_ERR(cqspi->iobase);

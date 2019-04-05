@@ -1653,7 +1653,6 @@ static int aspeed_video_init(struct aspeed_video *video)
 static int aspeed_video_probe(struct platform_device *pdev)
 {
 	int rc;
-	struct resource *res;
 	struct aspeed_video *video = kzalloc(sizeof(*video), GFP_KERNEL);
 
 	if (!video)
@@ -1667,9 +1666,7 @@ static int aspeed_video_probe(struct platform_device *pdev)
 	INIT_DELAYED_WORK(&video->res_work, aspeed_video_resolution_work);
 	INIT_LIST_HEAD(&video->buffers);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-
-	video->base = devm_ioremap_resource(video->dev, res);
+	video->base = devm_platform_ioremap_resource(pdev, 0);
 
 	if (IS_ERR(video->base))
 		return PTR_ERR(video->base);

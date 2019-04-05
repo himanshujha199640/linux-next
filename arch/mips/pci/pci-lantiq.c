@@ -208,17 +208,13 @@ static int ltq_pci_startup(struct platform_device *pdev)
 
 static int ltq_pci_probe(struct platform_device *pdev)
 {
-	struct resource *res_cfg, *res_bridge;
-
 	pci_clear_flags(PCI_PROBE_ONLY);
 
-	res_bridge = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	ltq_pci_membase = devm_ioremap_resource(&pdev->dev, res_bridge);
+	ltq_pci_membase = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(ltq_pci_membase))
 		return PTR_ERR(ltq_pci_membase);
 
-	res_cfg = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	ltq_pci_mapped_cfg = devm_ioremap_resource(&pdev->dev, res_cfg);
+	ltq_pci_mapped_cfg = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(ltq_pci_mapped_cfg))
 		return PTR_ERR(ltq_pci_mapped_cfg);
 

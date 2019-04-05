@@ -1097,8 +1097,7 @@ static int mtk_jpeg_probe(struct platform_device *pdev)
 	spin_lock_init(&jpeg->hw_lock);
 	jpeg->dev = &pdev->dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	jpeg->dec_reg_base = devm_ioremap_resource(&pdev->dev, res);
+	jpeg->dec_reg_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(jpeg->dec_reg_base)) {
 		ret = PTR_ERR(jpeg->dec_reg_base);
 		return ret;

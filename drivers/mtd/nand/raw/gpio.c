@@ -224,8 +224,7 @@ static int gpio_nand_probe(struct platform_device *pdev)
 
 	chip = &gpiomtd->nand_chip;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	chip->legacy.IO_ADDR_R = devm_ioremap_resource(dev, res);
+	chip->legacy.IO_ADDR_R = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(chip->legacy.IO_ADDR_R))
 		return PTR_ERR(chip->legacy.IO_ADDR_R);
 

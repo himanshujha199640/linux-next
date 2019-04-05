@@ -486,7 +486,6 @@ static const struct i2c_algorithm geni_i2c_algo = {
 static int geni_i2c_probe(struct platform_device *pdev)
 {
 	struct geni_i2c_dev *gi2c;
-	struct resource *res;
 	u32 proto, tx_depth;
 	int ret;
 
@@ -496,8 +495,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
 
 	gi2c->se.dev = &pdev->dev;
 	gi2c->se.wrapper = dev_get_drvdata(pdev->dev.parent);
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	gi2c->se.base = devm_ioremap_resource(&pdev->dev, res);
+	gi2c->se.base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(gi2c->se.base))
 		return PTR_ERR(gi2c->se.base);
 

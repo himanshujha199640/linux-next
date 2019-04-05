@@ -1444,7 +1444,6 @@ static int mtk_nfc_probe(struct platform_device *pdev)
 	struct device *dev = &pdev->dev;
 	struct device_node *np = dev->of_node;
 	struct mtk_nfc *nfc;
-	struct resource *res;
 	int ret, irq;
 
 	nfc = devm_kzalloc(dev, sizeof(*nfc), GFP_KERNEL);
@@ -1465,8 +1464,7 @@ static int mtk_nfc_probe(struct platform_device *pdev)
 	nfc->caps = of_device_get_match_data(dev);
 	nfc->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	nfc->regs = devm_ioremap_resource(dev, res);
+	nfc->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(nfc->regs)) {
 		ret = PTR_ERR(nfc->regs);
 		goto release_ecc;

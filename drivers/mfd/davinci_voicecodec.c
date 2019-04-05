@@ -59,9 +59,7 @@ static int __init davinci_vc_probe(struct platform_device *pdev)
 	}
 	clk_enable(davinci_vc->clk);
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-
-	davinci_vc->base = devm_ioremap_resource(&pdev->dev, res);
+	davinci_vc->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(davinci_vc->base)) {
 		ret = PTR_ERR(davinci_vc->base);
 		goto fail;

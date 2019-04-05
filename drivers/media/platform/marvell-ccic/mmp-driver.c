@@ -385,8 +385,7 @@ static int mmpcam_probe(struct platform_device *pdev)
 	 * Power/clock memory is elsewhere; get it too.  Perhaps this
 	 * should really be managed outside of this driver?
 	 */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	cam->power_regs = devm_ioremap_resource(&pdev->dev, res);
+	cam->power_regs = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(cam->power_regs))
 		return PTR_ERR(cam->power_regs);
 	/*

@@ -126,7 +126,6 @@ static int hisi_inno_phy_probe(struct platform_device *pdev)
 	struct hisi_inno_phy_priv *priv;
 	struct phy_provider *provider;
 	struct device_node *child;
-	struct resource *res;
 	int i = 0;
 	int ret;
 
@@ -134,8 +133,7 @@ static int hisi_inno_phy_probe(struct platform_device *pdev)
 	if (!priv)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	priv->mmio = devm_ioremap_resource(dev, res);
+	priv->mmio = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(priv->mmio)) {
 		ret = PTR_ERR(priv->mmio);
 		return ret;

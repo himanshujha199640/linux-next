@@ -482,7 +482,6 @@ static int __init davinci_rtc_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct davinci_rtc *davinci_rtc;
-	struct resource *res;
 	int ret = 0;
 
 	davinci_rtc = devm_kzalloc(&pdev->dev, sizeof(struct davinci_rtc), GFP_KERNEL);
@@ -495,8 +494,7 @@ static int __init davinci_rtc_probe(struct platform_device *pdev)
 		return davinci_rtc->irq;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	davinci_rtc->base = devm_ioremap_resource(dev, res);
+	davinci_rtc->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(davinci_rtc->base))
 		return PTR_ERR(davinci_rtc->base);
 

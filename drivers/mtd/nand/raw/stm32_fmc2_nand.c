@@ -1895,15 +1895,13 @@ static int stm32_fmc2_probe(struct platform_device *pdev)
 
 		fmc2->data_phys_addr[chip_cs] = res->start;
 
-		res = platform_get_resource(pdev, IORESOURCE_MEM,
-					    mem_region + 1);
-		fmc2->cmd_base[chip_cs] = devm_ioremap_resource(dev, res);
+		fmc2->cmd_base[chip_cs] = devm_platform_ioremap_resource(pdev,
+									 mem_region + 1);
 		if (IS_ERR(fmc2->cmd_base[chip_cs]))
 			return PTR_ERR(fmc2->cmd_base[chip_cs]);
 
-		res = platform_get_resource(pdev, IORESOURCE_MEM,
-					    mem_region + 2);
-		fmc2->addr_base[chip_cs] = devm_ioremap_resource(dev, res);
+		fmc2->addr_base[chip_cs] = devm_platform_ioremap_resource(pdev,
+									  mem_region + 2);
 		if (IS_ERR(fmc2->addr_base[chip_cs]))
 			return PTR_ERR(fmc2->addr_base[chip_cs]);
 	}

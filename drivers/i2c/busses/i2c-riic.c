@@ -403,8 +403,7 @@ static int riic_i2c_probe(struct platform_device *pdev)
 	if (!riic)
 		return -ENOMEM;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	riic->base = devm_ioremap_resource(&pdev->dev, res);
+	riic->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(riic->base))
 		return PTR_ERR(riic->base);
 
