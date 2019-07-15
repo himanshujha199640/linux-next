@@ -165,7 +165,6 @@ static int cdns_sierra_phy_probe(struct platform_device *pdev)
 	struct phy_provider *phy_provider;
 	struct device *dev = &pdev->dev;
 	const struct of_device_id *match;
-	struct resource *res;
 	int i, ret, node = 0;
 	struct device_node *dn = dev->of_node, *child;
 
@@ -178,8 +177,7 @@ static int cdns_sierra_phy_probe(struct platform_device *pdev)
 	dev_set_drvdata(dev, sp);
 	sp->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	sp->base = devm_ioremap_resource(dev, res);
+	sp->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(sp->base)) {
 		dev_err(dev, "missing \"reg\"\n");
 		return PTR_ERR(sp->base);

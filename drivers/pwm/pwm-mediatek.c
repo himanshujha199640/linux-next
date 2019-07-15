@@ -228,7 +228,6 @@ static int mtk_pwm_probe(struct platform_device *pdev)
 {
 	const struct mtk_pwm_platform_data *data;
 	struct mtk_pwm_chip *pc;
-	struct resource *res;
 	unsigned int i;
 	int ret;
 
@@ -241,8 +240,7 @@ static int mtk_pwm_probe(struct platform_device *pdev)
 		return -EINVAL;
 	pc->soc = data;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	pc->regs = devm_ioremap_resource(&pdev->dev, res);
+	pc->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(pc->regs))
 		return PTR_ERR(pc->regs);
 

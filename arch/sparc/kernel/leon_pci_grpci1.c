@@ -515,7 +515,6 @@ static int grpci1_of_probe(struct platform_device *ofdev)
 	int err, len;
 	const int *tmp;
 	u32 cfg, size, err_mask;
-	struct resource *res;
 
 	if (grpci1priv) {
 		dev_err(&ofdev->dev, "only one GRPCI1 supported\n");
@@ -536,8 +535,7 @@ static int grpci1_of_probe(struct platform_device *ofdev)
 	priv->dev = &ofdev->dev;
 
 	/* find device register base address */
-	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
-	regs = devm_ioremap_resource(&ofdev->dev, res);
+	regs = devm_platform_ioremap_resource(ofdev, 0);
 	if (IS_ERR(regs))
 		return PTR_ERR(regs);
 

@@ -230,7 +230,6 @@ static int ti_edac_probe(struct platform_device *pdev)
 {
 	int error_irq = 0, ret = -ENODEV;
 	struct device *dev = &pdev->dev;
-	struct resource *res;
 	void __iomem *reg;
 	struct mem_ctl_info *mci;
 	struct edac_mc_layer layers[1];
@@ -242,8 +241,7 @@ static int ti_edac_probe(struct platform_device *pdev)
 	if (!id)
 		return -ENODEV;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	reg = devm_ioremap_resource(dev, res);
+	reg = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(reg)) {
 		edac_printk(KERN_ERR, EDAC_MOD_NAME,
 			    "EMIF controller regs not defined\n");

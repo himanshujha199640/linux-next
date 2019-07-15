@@ -309,7 +309,6 @@ static int ixp4xx_gpio_probe(struct platform_device *pdev)
 	struct device *dev = &pdev->dev;
 	struct device_node *np = dev->of_node;
 	struct irq_domain *parent;
-	struct resource *res;
 	struct ixp4xx_gpio *g;
 	int ret;
 	int i;
@@ -319,8 +318,7 @@ static int ixp4xx_gpio_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	g->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	g->base = devm_ioremap_resource(dev, res);
+	g->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(g->base)) {
 		dev_err(dev, "ioremap error\n");
 		return PTR_ERR(g->base);

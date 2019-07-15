@@ -105,7 +105,6 @@ static int meson_audio_arb_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct meson_audio_arb_data *arb;
-	struct resource *res;
 	int ret;
 
 	arb = devm_kzalloc(dev, sizeof(*arb), GFP_KERNEL);
@@ -120,8 +119,7 @@ static int meson_audio_arb_probe(struct platform_device *pdev)
 		return PTR_ERR(arb->clk);
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	arb->regs = devm_ioremap_resource(dev, res);
+	arb->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(arb->regs))
 		return PTR_ERR(arb->regs);
 

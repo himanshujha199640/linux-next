@@ -39,8 +39,7 @@ static int bcm2835_pm_probe(struct platform_device *pdev)
 
 	pm->dev = dev;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	pm->base = devm_ioremap_resource(dev, res);
+	pm->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(pm->base))
 		return PTR_ERR(pm->base);
 

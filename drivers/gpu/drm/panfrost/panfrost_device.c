@@ -118,7 +118,6 @@ static void panfrost_regulator_fini(struct panfrost_device *pfdev)
 int panfrost_device_init(struct panfrost_device *pfdev)
 {
 	int err;
-	struct resource *res;
 
 	mutex_init(&pfdev->sched_lock);
 	mutex_init(&pfdev->reset_lock);
@@ -144,8 +143,7 @@ int panfrost_device_init(struct panfrost_device *pfdev)
 		goto err_out1;
 	}
 
-	res = platform_get_resource(pfdev->pdev, IORESOURCE_MEM, 0);
-	pfdev->iomem = devm_ioremap_resource(pfdev->dev, res);
+	pfdev->iomem = devm_platform_ioremap_resource(pfdev->pdev, 0);
 	if (IS_ERR(pfdev->iomem)) {
 		dev_err(pfdev->dev, "failed to ioremap iomem\n");
 		err = PTR_ERR(pfdev->iomem);

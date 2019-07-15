@@ -170,7 +170,6 @@ static int dw_probe(struct platform_device *pdev)
 {
 	struct dw_dma_chip *chip;
 	struct device *dev = &pdev->dev;
-	struct resource *mem;
 	const struct dw_dma_platform_data *pdata;
 	int err;
 
@@ -182,8 +181,7 @@ static int dw_probe(struct platform_device *pdev)
 	if (chip->irq < 0)
 		return chip->irq;
 
-	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	chip->regs = devm_ioremap_resource(dev, mem);
+	chip->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(chip->regs))
 		return PTR_ERR(chip->regs);
 

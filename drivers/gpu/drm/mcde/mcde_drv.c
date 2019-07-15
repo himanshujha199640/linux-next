@@ -320,7 +320,6 @@ static int mcde_probe(struct platform_device *pdev)
 	struct drm_device *drm;
 	struct mcde *mcde;
 	struct component_match *match;
-	struct resource *res;
 	u32 pid;
 	u32 val;
 	int irq;
@@ -402,8 +401,7 @@ static int mcde_probe(struct platform_device *pdev)
 		goto clk_disable;
 	}
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	mcde->regs = devm_ioremap_resource(dev, res);
+	mcde->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(mcde->regs)) {
 		dev_err(dev, "no MCDE regs\n");
 		ret = -EINVAL;

@@ -347,7 +347,6 @@ static int intel_msic_probe(struct platform_device *pdev)
 {
 	struct intel_msic_platform_data *pdata = dev_get_platdata(&pdev->dev);
 	struct intel_msic *msic;
-	struct resource *res;
 	u8 id0, id1;
 	int ret;
 
@@ -386,8 +385,7 @@ static int intel_msic_probe(struct platform_device *pdev)
 	 * Map in the MSIC interrupt tree area in SRAM. This is exposed to
 	 * the clients via intel_msic_irq_read().
 	 */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	msic->irq_base = devm_ioremap_resource(&pdev->dev, res);
+	msic->irq_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(msic->irq_base))
 		return PTR_ERR(msic->irq_base);
 

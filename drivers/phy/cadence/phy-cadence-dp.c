@@ -440,7 +440,6 @@ static void cdns_dp_phy_write_field(struct cdns_dp_phy *cdns_phy,
 
 static int cdns_dp_phy_probe(struct platform_device *pdev)
 {
-	struct resource *regs;
 	struct cdns_dp_phy *cdns_phy;
 	struct device *dev = &pdev->dev;
 	struct phy_provider *phy_provider;
@@ -459,13 +458,11 @@ static int cdns_dp_phy_probe(struct platform_device *pdev)
 		return PTR_ERR(phy);
 	}
 
-	regs = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	cdns_phy->base = devm_ioremap_resource(&pdev->dev, regs);
+	cdns_phy->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(cdns_phy->base))
 		return PTR_ERR(cdns_phy->base);
 
-	regs = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	cdns_phy->sd_base = devm_ioremap_resource(&pdev->dev, regs);
+	cdns_phy->sd_base = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(cdns_phy->sd_base))
 		return PTR_ERR(cdns_phy->sd_base);
 

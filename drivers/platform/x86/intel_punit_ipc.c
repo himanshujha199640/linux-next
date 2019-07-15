@@ -232,14 +232,12 @@ static int intel_punit_get_bars(struct platform_device *pdev)
 	 * - BIOS_IPC BASE_DATA
 	 * - BIOS_IPC BASE_IFACE
 	 */
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	addr = devm_ioremap_resource(&pdev->dev, res);
+	addr = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(addr))
 		return PTR_ERR(addr);
 	punit_ipcdev->base[BIOS_IPC][BASE_DATA] = addr;
 
-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-	addr = devm_ioremap_resource(&pdev->dev, res);
+	addr = devm_platform_ioremap_resource(pdev, 1);
 	if (IS_ERR(addr))
 		return PTR_ERR(addr);
 	punit_ipcdev->base[BIOS_IPC][BASE_IFACE] = addr;
